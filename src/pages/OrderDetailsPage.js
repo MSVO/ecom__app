@@ -1,9 +1,9 @@
-import { Fragment, useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import api from "../api/api";
 import OrderDetails from "../components/OrderDetails";
+import SideNavLayout from "../layout/SideNavLayout";
 
 function OrderDetailsPage() {
   const params = useParams();
@@ -25,10 +25,10 @@ function OrderDetailsPage() {
       });
   }, [auth.token, orderId]);
   return (
-    <Fragment>
+    <SideNavLayout>
       <h1>Order Details</h1>
       {!!order && <OrderDetails order={order} />}
-    </Fragment>
+    </SideNavLayout>
   );
 }
 export default OrderDetailsPage;

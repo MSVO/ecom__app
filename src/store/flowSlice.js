@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { LANDING } from "../hooks/useViewManager";
 
+const initialState = {
+  nextView: null,
+  forwardViewStack: [],
+};
 export const flowSlice = createSlice({
   name: "flow",
-  initialState: {
-    nextView: null,
-    forwardViewStack: [],
-  },
+  initialState,
   reducers: {
     setNextView: (state, action) => {
       state.nextView = action.payload;
@@ -17,14 +17,16 @@ export const flowSlice = createSlice({
     pushNextView: (state, action) => {
       state.forwardViewStack.push(action.payload);
     },
-    popNextViewOrLanding: (state) => {
+    popNextView: (state) => {
       if (state.forwardViewStack.length >= 1) {
-        return state.forwardViewStack.pop();
-      } else {
-        return LANDING;
+        state.forwardViewStack.pop();
       }
     },
     discardNextViews: (state) => {
+      state.forwardViewStack = [];
+    },
+    resetFlow: (state) => {
+      state.nextView = null;
       state.forwardViewStack = [];
     },
   },
@@ -34,8 +36,9 @@ export const {
   setNextView,
   clearNextView,
   pushNextView,
-  popNextViewOrLanding,
+  popNextView,
   discardNextViews,
+  resetFlow,
 } = flowSlice.actions;
 const flowReducer = flowSlice.reducer;
 export default flowReducer;

@@ -1,20 +1,12 @@
-import { makeStyles } from "@material-ui/core";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import api from "../api/api";
 import { makeTiles } from "../components/ProductTile";
+import SideNavLayout from "../layout/SideNavLayout";
 import { clearCartAndAddProduct } from "../store/cartSlice";
 
-const useStyles = makeStyles({
-  page: {
-    backgroundColor: "#E0E0E0",
-    padding: "1em",
-  },
-});
-
 function ProductsPage() {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const [products, setProducts] = useState();
@@ -50,9 +42,9 @@ function ProductsPage() {
   }, [transformProduct]);
 
   return (
-    <div className={classes.page}>
+    <SideNavLayout>
       <Fragment>{!!products && makeTiles(products)}</Fragment>
-    </div>
+    </SideNavLayout>
   );
 }
 

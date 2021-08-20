@@ -1,25 +1,21 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import api from "../api/api";
 import OrderDetails from "../components/OrderDetails";
+import useViewManager, { CHECKOUT, SIGNIN } from "../hooks/useViewManager";
+import SideNavLayout from "../layout/SideNavLayout";
 import routes from "../routes/routes";
 import { setNextView } from "../store/flowSlice";
 
-const useStyles = makeStyles({
-  page: {
-    padding: "1em",
-  },
-});
-
 function CheckoutPage() {
-  const classes = useStyles();
   const cart = useSelector((state) => state.cart);
   const [product, setProduct] = useState();
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const history = useHistory();
+  const viewManager = useViewManager();
   const [deliveryAddress, setDeliveryAddress] = useState({
     id: null,
     name: null,
@@ -31,8 +27,8 @@ function CheckoutPage() {
 
   useEffect(() => {
     if (!auth.token) {
-      dispatch(setNextView(routes.checkout.name));
-      history.push(routes.signIn.buildPath());
+      viewManager.pushView(CHECKOUT);
+      viewManager.navigateTo(SIGNIN);
       return;
     }
     api
@@ -58,7 +54,7 @@ function CheckoutPage() {
           throw e;
         });
     }
-  }, [auth.token, history, dispatch, cart.products]);
+  }, [auth.token, history, dispatch, cart.products, viewManager]);
 
   function placeOrderHandler() {
     api
@@ -73,7 +69,7 @@ function CheckoutPage() {
   }
 
   return (
-    <div className={classes.page}>
+    <SideNavLayout>
       <h1>Checkout</h1>
 
       <OrderDetails
@@ -84,10 +80,15 @@ function CheckoutPage() {
         }}
       />
 
-      <Button variant="contained" color="secondary" onClick={placeOrderHandler}>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={placeOrderHandler}
+        disabled={!product}
+      >
         Place Order
       </Button>
-    </div>
+    </SideNavLayout>
   );
 }
 

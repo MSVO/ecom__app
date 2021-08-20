@@ -11,7 +11,7 @@ const checkout = {
 };
 
 const signIn = {
-  name: "signin",
+  name: "signIn",
   template: "/signin",
   buildPath: (onSuccessRoute) => {
     return onSuccessRoute ? `/signin?onsuccess=${onSuccessRoute}` : "/signin";
