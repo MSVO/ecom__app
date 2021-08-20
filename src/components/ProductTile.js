@@ -7,9 +7,11 @@ import {
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
+  margin: {
+    margin: "1em",
+  },
   root: {
     minWidth: 275,
-    margin: "1em",
     maxWidth: 400,
   },
   bullet: {
@@ -31,9 +33,14 @@ function isSet(variable) {
 
 function ProductTile(props) {
   const classes = useStyles();
-  const { name, description, price, quantity } = props;
+  const { id, name, description, price, quantity } = props.product;
+
+  function onBuyNowClickHandler() {
+    props.onBuyNow({ id });
+  }
+
   return (
-    <Card className={classes.root}>
+    <Card className={`${props.hasMargin && classes.margin} ${classes.root}`}>
       <CardContent>
         <h3>{name}</h3>
         <p>{description}</p>
@@ -41,9 +48,16 @@ function ProductTile(props) {
         {isSet(quantity) && <p>Qt. {quantity} units</p>}
       </CardContent>
       <CardActions>
-        <Button variant="contained" color="primary" disableElevation>
-          Buy now
-        </Button>
+        {props.onBuyNow && (
+          <Button
+            onClick={onBuyNowClickHandler}
+            variant="contained"
+            color="secondary"
+            disableElevation
+          >
+            Buy now
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
@@ -51,14 +65,9 @@ function ProductTile(props) {
 
 export function makeTiles(products) {
   return products.map((product) => {
-    const { id, name, description, price } = product;
+    const { id, onBuyNow } = product;
     return (
-      <ProductTile
-        key={id}
-        name={name}
-        description={description}
-        price={price}
-      />
+      <ProductTile hasMargin key={id} product={product} onBuyNow={onBuyNow} />
     );
   });
 }
