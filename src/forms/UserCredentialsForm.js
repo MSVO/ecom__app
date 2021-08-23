@@ -28,8 +28,8 @@ function UserCredentialsForm(props) {
       <h1 className={classes.formControl}>{title}</h1>
       <FormControl className={classes.formControl}>
         <TextField
+          fullWidth
           inputRef={emailInput}
-          id="outlined-basic"
           label="Email"
           variant="outlined"
           type="text"
@@ -38,8 +38,8 @@ function UserCredentialsForm(props) {
       </FormControl>
       <FormControl className={classes.formControl}>
         <TextField
+          fullWidth
           inputRef={passwordInput}
-          id="outlined-basic"
           label="Password"
           variant="outlined"
           type="password"

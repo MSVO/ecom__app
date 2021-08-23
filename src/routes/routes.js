@@ -26,11 +26,20 @@ const order = {
   },
 };
 
+const addAddress = {
+  name: "addAddress",
+  template: "/user/addaddress",
+  buildPath: () => {
+    return `/user/addaddress`;
+  },
+};
+
 const routes = {
   landing,
   checkout,
   signIn,
   order,
+  addAddress,
 };
 
 export default routes;

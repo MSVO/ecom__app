@@ -3,14 +3,19 @@ import Address from "./Address";
 import ProductTile from "./ProductTile";
 
 function OrderDetails(props) {
-  const { address, product, quantity } = props.order;
+  const { address, product, quantity, onQuantityChange } = props.order;
 
   return (
     <Fragment>
       <h2>Address</h2>
-      <Address address={address} />
+      {!!address && <Address address={address} />}
       <h2>Product</h2>
-      {!!product && <ProductTile product={product} />}
+      {!!product && (
+        <ProductTile
+          product={{ ...product, quantity }}
+          onQuantityChange={onQuantityChange}
+        />
+      )}
       <h2>Total Price</h2>
       {!!product && <p>Rs. {product.price * quantity}</p>}
     </Fragment>

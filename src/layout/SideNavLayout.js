@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
+import { useSelector } from "react-redux";
 import NavMenu from "./NavMenu";
 
 const drawerWidth = 240;
@@ -57,6 +58,11 @@ function SideNavLayout(props) {
   const classes = useStyles();
   const theme = useTheme();
 
+  const viewTitle = useSelector((state) =>
+    state.flow.currentView && state.flow.currentView.title
+      ? state.flow.currentView.title
+      : ""
+  );
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -84,7 +90,7 @@ function SideNavLayout(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Title
+            {viewTitle}
           </Typography>
         </Toolbar>
       </AppBar>

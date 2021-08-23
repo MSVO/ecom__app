@@ -21,6 +21,9 @@ async function apiGet({ path, additonalHeaders, token }) {
     method: "GET",
     headers,
   });
+  if (!response.ok) {
+    throw response;
+  }
   const bodyObject = await response.json();
   return bodyObject;
 }
@@ -44,6 +47,9 @@ async function apiPost({ path, requestBodyObject, additonalHeaders, token }) {
     headers,
     body: JSON.stringify(requestBodyObject),
   });
+  if (!response.ok) {
+    throw response;
+  }
   const responseBodyObject = await response.json();
   return responseBodyObject;
 }
@@ -68,6 +74,17 @@ async function obtainUserToken(email, password) {
     requestBodyObject: {
       email: email,
       password: password,
+    },
+  });
+  return bodyObject.token;
+}
+
+async function createAccountAndObtainToken(email, password) {
+  const bodyObject = await apiPost({
+    path: "/user/",
+    requestBodyObject: {
+      email,
+      password,
     },
   });
   return bodyObject.token;
@@ -102,6 +119,36 @@ async function fetchOrderDetails({ token, orderId }) {
   return bodyObject.order;
 }
 
+async function addNewAddressForUser({
+  token,
+  name,
+  fullAddress,
+  pinCode,
+  email,
+  mobile,
+}) {
+  const bodyObject = await apiPost({
+    path: `/user/addresses`,
+    token,
+    requestBodyObject: {
+      name,
+      fullAddress,
+      pinCode,
+      email,
+      mobile,
+    },
+  });
+  return bodyObject.addedAddressId;
+}
+
+async function fetchAddressById({ token, addressId }) {
+  const responseBody = await apiGet({
+    path: `/user/addresses/${addressId}`,
+    token,
+  });
+  return responseBody.address;
+}
+
 const api = {
   fetchProduct,
   fetchProducts,
@@ -109,6 +156,9 @@ const api = {
   fetchAddressesOfAuthenticatedUser,
   createOrderUsingToken,
   fetchOrderDetails,
+  addNewAddressForUser,
+  createAccountAndObtainToken,
+  fetchAddressById,
 };
 
 export default api;

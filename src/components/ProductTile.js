@@ -4,6 +4,7 @@ import {
   CardActions,
   CardContent,
   makeStyles,
+  TextField,
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -45,7 +46,21 @@ function ProductTile(props) {
         <h3>{name}</h3>
         <p>{description}</p>
         <p>Price: Rs. {price}</p>
-        {isSet(quantity) && <p>Qt. {quantity} units</p>}
+        {!isSet(props.onQuantityChange) && isSet(quantity) && (
+          <p>Qt. {quantity} units</p>
+        )}
+        {isSet(props.onQuantityChange) && (
+          <span>
+            Qt.{" "}
+            <TextField
+              type="number"
+              value={quantity}
+              onChange={(e) => {
+                props.onQuantityChange(e.target.value);
+              }}
+            />
+          </span>
+        )}
       </CardContent>
       <CardActions>
         {props.onBuyNow && (

@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { LANDING } from "../hooks/useViewManager";
 
 const initialState = {
   nextView: null,
   forwardViewStack: [],
+  currentView: null,
+  currentViewParams: null,
 };
 export const flowSlice = createSlice({
   name: "flow",
@@ -17,9 +20,11 @@ export const flowSlice = createSlice({
     pushNextView: (state, action) => {
       state.forwardViewStack.push(action.payload);
     },
-    popNextView: (state) => {
+    popNextViewOrLandingToCurrent: (state) => {
       if (state.forwardViewStack.length >= 1) {
-        state.forwardViewStack.pop();
+        state.currentView = state.forwardViewStack.pop();
+      } else {
+        state.currentView = LANDING;
       }
     },
     discardNextViews: (state) => {
@@ -29,6 +34,16 @@ export const flowSlice = createSlice({
       state.nextView = null;
       state.forwardViewStack = [];
     },
+    setCurrentView: (state, action) => {
+      state.currentView = action.payload;
+    },
+    pushCurrentView: (state) => {
+      state.forwardViewStack.push(state.currentView);
+    },
+    pushCurrentViewAndSetNew: (state, action) => {
+      state.forwardViewStack.push(state.currentView);
+      state.currentView = action.payload;
+    },
   },
 });
 
@@ -36,9 +51,12 @@ export const {
   setNextView,
   clearNextView,
   pushNextView,
-  popNextView,
+  popNextViewOrLandingToCurrent,
   discardNextViews,
   resetFlow,
+  setCurrentView,
+  pushCurrentView,
+  pushCurrentViewAndSetNew,
 } = flowSlice.actions;
 const flowReducer = flowSlice.reducer;
 export default flowReducer;

@@ -1,15 +1,15 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import api from "../api/api";
 import { makeTiles } from "../components/ProductTile";
+import useViewManager, { CHECKOUT } from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
 import { clearCartAndAddProduct } from "../store/cartSlice";
 
 function ProductsPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [products, setProducts] = useState();
+  const viewManager = useViewManager();
 
   const onBuyNow = useCallback(
     (product) => {
@@ -19,9 +19,12 @@ function ProductsPage() {
           id: product.id,
         })
       );
-      history.push("/checkout");
+      viewManager.navigateTo({
+        viewName: CHECKOUT,
+        title: "Checkout Cart",
+      });
     },
-    [dispatch, history]
+    [dispatch]
   );
 
   const transformProduct = useCallback(

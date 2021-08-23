@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
+import AddAddressPage from "./pages/AddAddressPage";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route exact path={routes.order.template}>
           <OrderDetailsPage />
+        </Route>
+        <Route exact path={routes.addAddress.template}>
+          <AddAddressPage />
         </Route>
       </Switch>
     </BrowserRouter>
