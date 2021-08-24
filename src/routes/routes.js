@@ -34,12 +34,21 @@ const addAddress = {
   },
 };
 
+const addresses = {
+  name: "addresses",
+  template: "/user/addresses",
+  buildPath: () => {
+    return `/user/addresses`;
+  },
+};
+
 const routes = {
   landing,
   checkout,
   signIn,
   order,
   addAddress,
+  addresses,
 };
 
 export default routes;

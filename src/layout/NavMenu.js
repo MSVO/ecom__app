@@ -10,6 +10,7 @@ import {
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import useViewManager, {
+  ADDRESSES,
   ADD_ADDRESS,
   CHECKOUT,
   LANDING,
@@ -49,6 +50,13 @@ function NavMenu(props) {
     viewManager.navigateTo(ADD_ADDRESS);
   }
 
+  function addressesButtonHandler() {
+    viewManager.navigateTo({
+      viewName: ADDRESSES,
+      title: "Your Addresses",
+    });
+  }
+
   const accountSubMenu = (
     <Fragment>
       {!!auth.token && (
@@ -57,7 +65,7 @@ function NavMenu(props) {
             <ListItemIcon></ListItemIcon>
             <ListItemText primary="Checkout" />
           </ListItem>
-          <ListItem key={"address"}>
+          <ListItem button key={"addresses"} onClick={addressesButtonHandler}>
             <ListItemIcon></ListItemIcon>
             <ListItemText primary="Addresses" />
           </ListItem>

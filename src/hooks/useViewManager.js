@@ -18,6 +18,7 @@ const SIGNIN = "signIn";
 const CHECKOUT = "checkout";
 const ADD_ADDRESS = "addAddress";
 const ORDER = "order";
+const ADDRESSES = "addresses";
 
 function useViewManager() {
   const history = useHistory();
@@ -44,6 +45,9 @@ function useViewManager() {
           break;
         case ADD_ADDRESS:
           history.push(routes.addAddress.buildPath());
+          break;
+        case ADDRESSES:
+          history.push(routes.addresses.buildPath());
           break;
         default:
           break;
@@ -96,5 +100,5 @@ function useViewManager() {
   return viewManager;
 }
 
-export { LANDING, SIGNIN, CHECKOUT, ADD_ADDRESS, ORDER };
+export { LANDING, SIGNIN, CHECKOUT, ADD_ADDRESS, ORDER, ADDRESSES };
 export default useViewManager;

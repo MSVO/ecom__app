@@ -3,6 +3,20 @@ const REQUEST_HEADERS = {
   "Content-Type": "application/json",
 };
 
+function combineHeaders(headerObjectsArray) {
+  let headers = {};
+  headerObjectsArray.forEach((element) => {
+    headers = { ...headers, ...element };
+  });
+  return headers;
+}
+
+function tokenHeader(token) {
+  return {
+    Authorization: token,
+  };
+}
+
 async function apiGet({ path, additonalHeaders, token }) {
   let headers = { ...REQUEST_HEADERS };
   if (additonalHeaders) {
@@ -46,6 +60,23 @@ async function apiPost({ path, requestBodyObject, additonalHeaders, token }) {
     method: "POST",
     headers,
     body: JSON.stringify(requestBodyObject),
+  });
+  if (!response.ok) {
+    throw response;
+  }
+  const responseBodyObject = await response.json();
+  return responseBodyObject;
+}
+
+async function apiDelete({ path, additonalHeaders, token }) {
+  const headers = combineHeaders([
+    REQUEST_HEADERS,
+    additonalHeaders,
+    tokenHeader(token),
+  ]);
+  const response = await fetch(`${ROOT}${path}`, {
+    method: "DELETE",
+    headers,
   });
   if (!response.ok) {
     throw response;
@@ -149,6 +180,14 @@ async function fetchAddressById({ token, addressId }) {
   return responseBody.address;
 }
 
+async function deleteAddressById({ token, addressId }) {
+  const responseBody = await apiDelete({
+    path: `/user/addresses/${addressId}`,
+    token,
+  });
+  return responseBody;
+}
+
 const api = {
   fetchProduct,
   fetchProducts,
@@ -159,6 +198,7 @@ const api = {
   addNewAddressForUser,
   createAccountAndObtainToken,
   fetchAddressById,
+  deleteAddressById,
 };
 
 export default api;
