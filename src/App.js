@@ -5,6 +5,7 @@ import AddressesPage from "./pages/AddressesPage";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
+import PastOrdersPage from "./pages/PastOrdersPage";
 import ProductsPage from "./pages/ProductsPage";
 import routes from "./routes/routes";
 
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route exact path={routes.addresses.template}>
           <AddressesPage />
+        </Route>
+        <Route exact path={routes.pastOrders.template}>
+          <PastOrdersPage />
         </Route>
       </Switch>
     </BrowserRouter>

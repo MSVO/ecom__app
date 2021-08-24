@@ -14,9 +14,14 @@ import useViewManager, {
   ADD_ADDRESS,
   CHECKOUT,
   LANDING,
+  PAST_ORDERS,
   SIGNIN,
 } from "../hooks/useViewManager";
-
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import StoreMallDirectoryIcon from "@material-ui/icons/StoreMallDirectory";
+import HistoryIcon from "@material-ui/icons/History";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
@@ -57,16 +62,33 @@ function NavMenu(props) {
     });
   }
 
+  function pastOrdersButtonHandler() {
+    viewManager.navigateTo({
+      viewName: PAST_ORDERS,
+      title: "Past Orders",
+    });
+  }
+
   const accountSubMenu = (
     <Fragment>
       {!!auth.token && (
         <List>
+          <ListItem key="userChip">
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText>{auth.name}</ListItemText>
+          </ListItem>
           <ListItem button key={"checkout"} onClick={cartButtonHandler}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon>
+              <ShoppingCartIcon />
+            </ListItemIcon>
             <ListItemText primary="Checkout" />
           </ListItem>
           <ListItem button key={"addresses"} onClick={addressesButtonHandler}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon>
+              <StoreMallDirectoryIcon />
+            </ListItemIcon>
             <ListItemText primary="Addresses" />
           </ListItem>
           <Collapse in={true} className={classes.nested}>
@@ -81,8 +103,16 @@ function NavMenu(props) {
               </ListItem>
             </List>
           </Collapse>
+          <ListItem button key={"pastOrders"} onClick={pastOrdersButtonHandler}>
+            <ListItemIcon>
+              <HistoryIcon />
+            </ListItemIcon>
+            <ListItemText primary="Orders" />
+          </ListItem>
           <ListItem button key={"signOut"} onClick={signOutButtonHandler}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
             <ListItemText primary={"Sign Out"} />
           </ListItem>
         </List>
@@ -90,7 +120,9 @@ function NavMenu(props) {
       {!auth.token && (
         <List>
           <ListItem button key={"signIn"} onClick={signInButtonHandler}>
-            <ListItemIcon></ListItemIcon>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
             <ListItemText primary={"Sign In"} />
           </ListItem>
         </List>

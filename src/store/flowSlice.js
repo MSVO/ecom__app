@@ -22,7 +22,9 @@ export const flowSlice = createSlice({
     },
     popNextViewOrLandingToCurrent: (state) => {
       if (state.forwardViewStack.length >= 1) {
-        state.currentView = state.forwardViewStack.pop();
+        const length = state.forwardViewStack.length;
+        state.currentView = state.forwardViewStack[length - 1];
+        state.forwardViewStack = state.forwardViewStack.slice(0, length - 1);
       } else {
         state.currentView = LANDING;
       }

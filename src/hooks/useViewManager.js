@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import routes from "../routes/routes";
-import { clearToken } from "../store/authSlice";
+import { resetAuth } from "../store/authSlice";
 import { clearCart } from "../store/cartSlice";
 import {
   discardNextViews,
@@ -19,6 +19,7 @@ const CHECKOUT = "checkout";
 const ADD_ADDRESS = "addAddress";
 const ORDER = "order";
 const ADDRESSES = "addresses";
+const PAST_ORDERS = "pastOrders";
 
 function useViewManager() {
   const history = useHistory();
@@ -26,30 +27,33 @@ function useViewManager() {
   const flow = useSelector((state) => state.flow);
 
   useEffect(() => {
-    const currentView = flow.currentView;
     if (flow.currentView === null) {
     } else if (flow.currentView === "") {
       history.push(routes.landing.buildPath());
     } else if (typeof flow.currentView === "string") {
       history.push(routes[flow.currentView].buildPath());
     } else if (typeof flow.currentView === "object") {
-      switch (flow.currentView.viewName) {
+      const viewName = flow.currentView.viewName;
+      switch (viewName) {
         case ORDER:
-          history.push(routes.order.buildPath(currentView.orderId));
+          history.push(routes.order.buildPath(flow.currentView.orderId));
           break;
-        case SIGNIN:
-          history.push(routes.signIn.buildPath());
-          break;
-        case CHECKOUT:
-          history.push(routes.checkout.buildPath());
-          break;
-        case ADD_ADDRESS:
-          history.push(routes.addAddress.buildPath());
-          break;
-        case ADDRESSES:
-          history.push(routes.addresses.buildPath());
-          break;
+        // case SIGNIN:
+        //   history.push(routes.signIn.buildPath());
+        //   break;
+        // case CHECKOUT:
+        //   history.push(routes.checkout.buildPath());
+        //   break;
+        // case ADD_ADDRESS:
+        //   history.push(routes.addAddress.buildPath());
+        //   break;
+        // case ADDRESSES:
+        //   history.push(routes.addresses.buildPath());
+        //   break;
+        // case PAST_ORDERS:
+        //   history.push(routes.pastOrders.buildPath());
         default:
+          history.push(routes[viewName].buildPath());
           break;
       }
     }
@@ -72,6 +76,7 @@ function useViewManager() {
     dispatch(discardNextViews());
   };
   const navigateTo = (view) => {
+    dispatch(discardNextViews());
     dispatch(setCurrentView(view));
   };
   const promptSignIn = () => {
@@ -79,14 +84,13 @@ function useViewManager() {
     navigateTo(SIGNIN);
   };
   const pushCurrentAndNavigate = (destinationView) => {
-    dispatch(pushCurrentView());
     dispatch(pushCurrentViewAndSetNew(destinationView));
   };
   const logout = () => {
+    navigateTo(LANDING);
     dispatch(clearCart());
     dispatch(resetFlow());
-    dispatch(clearToken());
-    navigateTo(LANDING);
+    dispatch(resetAuth());
   };
   const viewManager = {
     pushView,
@@ -100,5 +104,13 @@ function useViewManager() {
   return viewManager;
 }
 
-export { LANDING, SIGNIN, CHECKOUT, ADD_ADDRESS, ORDER, ADDRESSES };
+export {
+  LANDING,
+  SIGNIN,
+  CHECKOUT,
+  ADD_ADDRESS,
+  ORDER,
+  ADDRESSES,
+  PAST_ORDERS,
+};
 export default useViewManager;

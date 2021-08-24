@@ -42,6 +42,14 @@ const addresses = {
   },
 };
 
+const pastOrders = {
+  name: "pastOrders",
+  template: "/user/orders",
+  buildPath: () => {
+    return `/user/orders`;
+  },
+};
+
 const routes = {
   landing,
   checkout,
@@ -49,6 +57,7 @@ const routes = {
   order,
   addAddress,
   addresses,
+  pastOrders,
 };
 
 export default routes;

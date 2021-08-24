@@ -6,22 +6,26 @@ import api from "../api/api";
 import UserCredentialsForm from "../forms/UserCredentialsForm";
 import useViewManager from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
-import { setToken } from "../store/authSlice";
+import { setAuth } from "../store/authSlice";
 
 function AuthenticationPage(props) {
   const dispatch = useDispatch();
   const viewManager = useViewManager();
   const [tabIndex, setTabIndex] = useState(0);
   const currentView = useSelector((state) => state.flow.currentView);
-  function handleToken(token) {
-    dispatch(setToken(token));
+
+  function authSuccessHandler({ email, token }) {
+    dispatch(setAuth({ token, name: email }));
     viewManager.moveForward();
   }
+
   function onSignIn(creds) {
     const { email, password } = creds;
     api
       .obtainUserToken(email, password)
-      .then(handleToken)
+      .then((token) => {
+        authSuccessHandler({ email, token });
+      })
       .catch((e) => {
         throw e;
       });
@@ -31,7 +35,9 @@ function AuthenticationPage(props) {
     const { email, password } = creds;
     api
       .createAccountAndObtainToken(email, password)
-      .then(handleToken)
+      .then((token) => {
+        authSuccessHandler({ email, token });
+      })
       .catch((e) => {
         throw e;
       });

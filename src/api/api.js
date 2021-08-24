@@ -188,6 +188,14 @@ async function deleteAddressById({ token, addressId }) {
   return responseBody;
 }
 
+async function getOrdersByCreatorToken({ token }) {
+  const responseBody = await apiGet({
+    path: `/user/orders`,
+    token,
+  });
+  return responseBody.orders;
+}
+
 const api = {
   fetchProduct,
   fetchProducts,
@@ -199,6 +207,7 @@ const api = {
   createAccountAndObtainToken,
   fetchAddressById,
   deleteAddressById,
+  getOrdersByCreatorToken,
 };
 
 export default api;
