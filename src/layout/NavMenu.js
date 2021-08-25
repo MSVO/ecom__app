@@ -14,6 +14,8 @@ import useViewManager, {
   ADD_ADDRESS,
   CHECKOUT,
   LANDING,
+  MANAGE_ORDERS,
+  MANAGE_PRODUCTS,
   PAST_ORDERS,
   SIGNIN,
 } from "../hooks/useViewManager";
@@ -34,6 +36,7 @@ function NavMenu(props) {
   const viewManager = useViewManager();
 
   const auth = useSelector((state) => state.auth);
+  const isAdmin = auth.roles.includes("ROLE_ADMIN");
 
   function homeButtonHandler() {
     viewManager.navigateTo(LANDING);
@@ -62,6 +65,22 @@ function NavMenu(props) {
     });
   }
 
+  function manageOrdersButtonHandler() {
+    viewManager.navigateTo({
+      viewName: MANAGE_ORDERS,
+      title: "Manage Orders",
+      queryString: "?status=placed",
+    });
+  }
+
+  function manageProductsButtonHandler() {
+    viewManager.navigateTo({
+      viewName: MANAGE_PRODUCTS,
+      title: "Manage Products",
+      query: "",
+    });
+  }
+
   function pastOrdersButtonHandler() {
     viewManager.navigateTo({
       viewName: PAST_ORDERS,
@@ -79,36 +98,68 @@ function NavMenu(props) {
             </ListItemIcon>
             <ListItemText>{auth.name}</ListItemText>
           </ListItem>
-          <ListItem button key={"checkout"} onClick={cartButtonHandler}>
-            <ListItemIcon>
-              <ShoppingCartIcon />
-            </ListItemIcon>
-            <ListItemText primary="Checkout" />
-          </ListItem>
-          <ListItem button key={"addresses"} onClick={addressesButtonHandler}>
-            <ListItemIcon>
-              <StoreMallDirectoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="Addresses" />
-          </ListItem>
-          <Collapse in={true} className={classes.nested}>
-            <List component="div" disablePadding>
+          {!isAdmin && (
+            <Fragment>
+              <ListItem button key={"checkout"} onClick={cartButtonHandler}>
+                <ListItemIcon>
+                  <ShoppingCartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Checkout" />
+              </ListItem>
               <ListItem
                 button
-                key={"addaddress"}
-                onClick={addAddressButtonHandler}
+                key={"addresses"}
+                onClick={addressesButtonHandler}
+              >
+                <ListItemIcon>
+                  <StoreMallDirectoryIcon />
+                </ListItemIcon>
+                <ListItemText primary="Addresses" />
+              </ListItem>
+              <Collapse in={true} className={classes.nested}>
+                <List component="div" disablePadding>
+                  <ListItem
+                    button
+                    key={"addaddress"}
+                    onClick={addAddressButtonHandler}
+                  >
+                    <ListItemIcon></ListItemIcon>
+                    <ListItemText primary="Add New" />
+                  </ListItem>
+                </List>
+              </Collapse>
+              <ListItem
+                button
+                key={"pastOrders"}
+                onClick={pastOrdersButtonHandler}
+              >
+                <ListItemIcon>
+                  <HistoryIcon />
+                </ListItemIcon>
+                <ListItemText primary="Orders" />
+              </ListItem>
+            </Fragment>
+          )}
+          {isAdmin && (
+            <Fragment>
+              <ListItem
+                button
+                key="manageOrders"
+                onClick={manageOrdersButtonHandler}
               >
                 <ListItemIcon></ListItemIcon>
-                <ListItemText primary="Add New" />
+                <ListItemText>Orders</ListItemText>
               </ListItem>
-            </List>
-          </Collapse>
-          <ListItem button key={"pastOrders"} onClick={pastOrdersButtonHandler}>
-            <ListItemIcon>
-              <HistoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="Orders" />
-          </ListItem>
+              <ListItem
+                button
+                key="manageProducts"
+                onClick={manageProductsButtonHandler}
+              >
+                <ListItemIcon></ListItemIcon>
+                <ListItemText>Products</ListItemText>
+              </ListItem>
+            </Fragment>
+          )}
           <ListItem button key={"signOut"} onClick={signOutButtonHandler}>
             <ListItemIcon>
               <ExitToAppIcon />

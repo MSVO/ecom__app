@@ -1,5 +1,4 @@
 import {
-  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -27,6 +26,7 @@ function OrderTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Oder ID</TableCell>
+            <TableCell>Status</TableCell>
             <TableCell>Product</TableCell>
             <TableCell>Quantity</TableCell>
             <TableCell>Gross Price</TableCell>
@@ -36,8 +36,9 @@ function OrderTable(props) {
         </TableHead>
         <TableBody>
           {orders.map((order) => (
-            <TableRow>
+            <TableRow key={order.id}>
               <TableCell>{order.id}</TableCell>
+              <TableCell>{order.status}</TableCell>
               <TableCell>{order.product.name}</TableCell>
               <TableCell>{order.quantity}</TableCell>
               <TableCell>{`₹ ${computePrice(

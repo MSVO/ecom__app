@@ -20,6 +20,8 @@ const ADD_ADDRESS = "addAddress";
 const ORDER = "order";
 const ADDRESSES = "addresses";
 const PAST_ORDERS = "pastOrders";
+const MANAGE_ORDERS = "manageOrders";
+const MANAGE_PRODUCTS = "manageProducts";
 
 function useViewManager() {
   const history = useHistory();
@@ -37,6 +39,13 @@ function useViewManager() {
       switch (viewName) {
         case ORDER:
           history.push(routes.order.buildPath(flow.currentView.orderId));
+          break;
+        case MANAGE_ORDERS:
+          history.push(
+            routes.manageOrders.buildPath({
+              queryString: flow.currentView.queryString,
+            })
+          );
           break;
         // case SIGNIN:
         //   history.push(routes.signIn.buildPath());
@@ -112,5 +121,7 @@ export {
   ORDER,
   ADDRESSES,
   PAST_ORDERS,
+  MANAGE_ORDERS,
+  MANAGE_PRODUCTS,
 };
 export default useViewManager;

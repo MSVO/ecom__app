@@ -196,6 +196,31 @@ async function getOrdersByCreatorToken({ token }) {
   return responseBody.orders;
 }
 
+async function queryOrders({ token, queryString }) {
+  let path = "/orders/";
+  if (queryString) {
+    path = path + `${queryString}`;
+  }
+  console.log(path);
+  const responseBody = await apiGet({
+    path,
+    token,
+  });
+  return responseBody.orders;
+}
+
+async function performOrderAction({ token, orderId, action, remark }) {
+  const responseBody = await apiPost({
+    path: `/orders/${orderId}`,
+    token,
+    requestBodyObject: {
+      action,
+      remark,
+    },
+  });
+  return responseBody.updatedOrder;
+}
+
 const api = {
   fetchProduct,
   fetchProducts,
@@ -208,6 +233,8 @@ const api = {
   fetchAddressById,
   deleteAddressById,
   getOrdersByCreatorToken,
+  queryOrders,
+  performOrderAction,
 };
 
 export default api;

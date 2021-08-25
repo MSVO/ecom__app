@@ -50,6 +50,22 @@ const pastOrders = {
   },
 };
 
+const manageOrders = {
+  name: "manageOrders",
+  template: "/dash/orders",
+  buildPath: ({ queryString }) => {
+    return `/dash/orders${queryString}`;
+  },
+};
+
+const manageProducts = {
+  name: "manageProducts",
+  template: "/dash/products",
+  buildPath: () => {
+    return `/dash/products`;
+  },
+};
+
 const routes = {
   landing,
   checkout,
@@ -58,6 +74,8 @@ const routes = {
   addAddress,
   addresses,
   pastOrders,
+  manageOrders,
+  manageProducts,
 };
 
 export default routes;

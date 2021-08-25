@@ -16,13 +16,13 @@ import {
 
 const persistAuthConfig = {
   key: "auth",
-  version: 1,
+  version: 2,
   storage,
 };
 
 const persistFlowConfig = {
   key: "flow",
-  version: 1,
+  version: 2,
   storage,
 };
 

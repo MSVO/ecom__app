@@ -15,7 +15,9 @@ function AuthenticationPage(props) {
   const currentView = useSelector((state) => state.flow.currentView);
 
   function authSuccessHandler({ email, token }) {
-    dispatch(setAuth({ token, name: email }));
+    dispatch(
+      setAuth({ token, name: email, roles: token.split(":")[1].split(";") })
+    );
     viewManager.moveForward();
   }
 
