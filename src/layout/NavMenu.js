@@ -39,7 +39,7 @@ function NavMenu(props) {
   const isAdmin = auth.roles.includes("ROLE_ADMIN");
 
   function homeButtonHandler() {
-    viewManager.navigateTo(LANDING);
+    viewManager.navigateTo({ viewName: LANDING });
   }
 
   function cartButtonHandler() {
@@ -65,19 +65,28 @@ function NavMenu(props) {
     });
   }
 
-  function manageOrdersButtonHandler() {
+  function manageOrdersButtonHandler(queryString) {
     viewManager.navigateTo({
       viewName: MANAGE_ORDERS,
       title: "Manage Orders",
-      queryString: "?status=placed",
+      queryString,
     });
+  }
+
+  function ordersPendingReviewButtonHandler() {
+    manageOrdersButtonHandler("?status=placed");
+  }
+  function ordersAcceptedButtonHandler() {
+    manageOrdersButtonHandler("?status=accepted");
+  }
+  function ordersRejectedButtonHandler() {
+    manageOrdersButtonHandler("?status=rejected");
   }
 
   function manageProductsButtonHandler() {
     viewManager.navigateTo({
       viewName: MANAGE_PRODUCTS,
       title: "Manage Products",
-      query: "",
     });
   }
 
@@ -142,14 +151,38 @@ function NavMenu(props) {
           )}
           {isAdmin && (
             <Fragment>
-              <ListItem
-                button
-                key="manageOrders"
-                onClick={manageOrdersButtonHandler}
-              >
+              <ListItem key="manageOrders">
                 <ListItemIcon></ListItemIcon>
                 <ListItemText>Orders</ListItemText>
               </ListItem>
+              <Collapse in={true} className={classes.nested}>
+                <List component="div" disablePadding>
+                  <ListItem
+                    button
+                    key={"pendingReview"}
+                    onClick={ordersPendingReviewButtonHandler}
+                  >
+                    <ListItemIcon></ListItemIcon>
+                    <ListItemText primary="Placed" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    key="accepted"
+                    onClick={ordersAcceptedButtonHandler}
+                  >
+                    <ListItemIcon></ListItemIcon>
+                    <ListItemText primary="Accepted" />
+                  </ListItem>
+                </List>
+                <ListItem
+                  button
+                  key={"rejectedorders"}
+                  onClick={ordersRejectedButtonHandler}
+                >
+                  <ListItemIcon></ListItemIcon>
+                  <ListItemText primary="Rejected" />
+                </ListItem>
+              </Collapse>
               <ListItem
                 button
                 key="manageProducts"

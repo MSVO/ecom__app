@@ -1,7 +1,7 @@
 const landing = {
   name: "landing",
   template: "/",
-  buildPath: () => "/",
+  buildPath: ({ queryString }) => `/${queryString}`,
 };
 
 const checkout = {
@@ -61,8 +61,8 @@ const manageOrders = {
 const manageProducts = {
   name: "manageProducts",
   template: "/dash/products",
-  buildPath: () => {
-    return `/dash/products`;
+  buildPath: ({ queryString }) => {
+    return `/dash/products${queryString}`;
   },
 };
 

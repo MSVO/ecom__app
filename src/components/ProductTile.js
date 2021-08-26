@@ -5,6 +5,7 @@ import {
   CardContent,
   makeStyles,
   TextField,
+  Typography,
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -33,6 +34,7 @@ function isSet(variable) {
 }
 
 function ProductTile(props) {
+  const { changeQuantityButton, editButton, deleteButton, actions } = props;
   const classes = useStyles();
   const { id, name, description, price, quantity } = props.product;
 
@@ -43,11 +45,16 @@ function ProductTile(props) {
   return (
     <Card className={`${props.hasMargin && classes.margin} ${classes.root}`}>
       <CardContent>
-        <h3>{name}</h3>
-        <p>{description}</p>
+        <h3>
+          {name} {editButton}
+          {deleteButton}
+        </h3>
+        <Typography noWrap>{description}</Typography>
         <p>Price: Rs. {price}</p>
         {!isSet(props.onQuantityChange) && isSet(quantity) && (
-          <p>Qt. {quantity} units</p>
+          <p>
+            Qt. {quantity} units <span>{changeQuantityButton}</span>
+          </p>
         )}
         {isSet(props.onQuantityChange) && (
           <span>
@@ -63,6 +70,7 @@ function ProductTile(props) {
         )}
       </CardContent>
       <CardActions>
+        {actions}
         {props.onBuyNow && (
           <Button
             onClick={onBuyNowClickHandler}

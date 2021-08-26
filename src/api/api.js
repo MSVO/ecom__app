@@ -68,6 +68,32 @@ async function apiPost({ path, requestBodyObject, additonalHeaders, token }) {
   return responseBodyObject;
 }
 
+async function apiPut({ path, requestBodyObject, additonalHeaders, token }) {
+  let headers = { ...REQUEST_HEADERS };
+  if (additonalHeaders) {
+    headers = {
+      ...headers,
+      ...additonalHeaders,
+    };
+  }
+  if (token) {
+    headers = {
+      ...headers,
+      Authorization: token,
+    };
+  }
+  const response = await fetch(`${ROOT}${path}`, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(requestBodyObject),
+  });
+  if (!response.ok) {
+    throw response;
+  }
+  const responseBodyObject = await response.json();
+  return responseBodyObject;
+}
+
 async function apiDelete({ path, additonalHeaders, token }) {
   const headers = combineHeaders([
     REQUEST_HEADERS,
@@ -221,6 +247,47 @@ async function performOrderAction({ token, orderId, action, remark }) {
   return responseBody.updatedOrder;
 }
 
+async function putProduct({
+  token,
+  productId,
+  name,
+  description,
+  price,
+  stockQuantity,
+}) {
+  const responseBody = await apiPut({
+    path: `/products/${productId}`,
+    token,
+    requestBodyObject: {
+      name,
+      description,
+      price,
+      stockQuantity,
+    },
+  });
+  return responseBody.updatedProduct;
+}
+
+async function createProduct({
+  token,
+  name,
+  description,
+  price,
+  stockQuantity,
+}) {
+  const responseBody = await apiPost({
+    path: `/products/`,
+    token,
+    requestBodyObject: {
+      name,
+      description,
+      price,
+      stockQuantity,
+    },
+  });
+  return responseBody.createdProduct;
+}
+
 const api = {
   fetchProduct,
   fetchProducts,
@@ -235,6 +302,8 @@ const api = {
   getOrdersByCreatorToken,
   queryOrders,
   performOrderAction,
+  putProduct,
+  createProduct,
 };
 
 export default api;

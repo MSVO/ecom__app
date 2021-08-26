@@ -4,15 +4,14 @@ import {
   Dialog,
   Divider,
   makeStyles,
-  TextField,
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import api from "../api/api";
 import OrderDetails from "../components/OrderDetails";
 import OrderTable from "../components/OrderTable";
+import OrderActions from "../forms/OrderActions";
 import useViewManager, { LANDING } from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
 
@@ -136,28 +135,16 @@ function OrdersPage(props) {
               <Divider spacing={3} />
               <br />
               <br />
-              {/* TODO: Add remark field and debug action request */}
-              {/* <Autocomplete
-                options={[
-                  "Sorry, the item is out of stock",
-                  "Sorry, we are unable to deliver at your location",
-                ]}
-                spacing={3}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Add a remark"
-                    fullWidth
-                    variant="outlined"
-                    onChange={(event) =>
-                      setOrderActionRemark(event.target.value)
-                    }
-                    value={orderActionRemark}
-                  />
-                )}
-              /> */}
-              <br />
-              <CardActions>{actions}</CardActions>
+              <OrderActions
+                order={order}
+                onComplete={(order) => {
+                  updateLocalOrderTableEntry(order.id, localOrderIndex, {
+                    status: order.status,
+                    remark: order.remark,
+                  });
+                  handleModalClose();
+                }}
+              />
             </Fragment>
           ),
         });
@@ -187,7 +174,7 @@ function OrdersPage(props) {
 
   useEffect(() => {
     if (!auth.token || !auth.roles.includes("ROLE_ADMIN")) {
-      viewManager.navigateTo(LANDING);
+      viewManager.navigateTo({ viewName: LANDING });
       return;
     }
     api

@@ -40,10 +40,12 @@ function useViewManager() {
         case ORDER:
           history.push(routes.order.buildPath(flow.currentView.orderId));
           break;
+        case MANAGE_PRODUCTS:
         case MANAGE_ORDERS:
+        case LANDING:
           history.push(
-            routes.manageOrders.buildPath({
-              queryString: flow.currentView.queryString,
+            routes[viewName].buildPath({
+              queryString: flow.currentView.queryString || "",
             })
           );
           break;
@@ -96,7 +98,7 @@ function useViewManager() {
     dispatch(pushCurrentViewAndSetNew(destinationView));
   };
   const logout = () => {
-    navigateTo(LANDING);
+    navigateTo({ viewName: LANDING });
     dispatch(clearCart());
     dispatch(resetFlow());
     dispatch(resetAuth());

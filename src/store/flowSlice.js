@@ -26,7 +26,9 @@ export const flowSlice = createSlice({
         state.currentView = state.forwardViewStack[length - 1];
         state.forwardViewStack = state.forwardViewStack.slice(0, length - 1);
       } else {
-        state.currentView = LANDING;
+        state.currentView = {
+          viewName: LANDING,
+        };
       }
     },
     discardNextViews: (state) => {

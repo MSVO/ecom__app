@@ -1,4 +1,5 @@
 import {
+  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -8,9 +9,16 @@ import {
   TableRow,
 } from "@material-ui/core";
 
+const useStyles = makeStyles((theme) => ({
+  tableHead: {
+    fontWeight: "bold",
+  },
+}));
+
 function OrderTable(props) {
   const { orders } = props;
 
+  const classes = useStyles();
   function computePrice(product, quantity) {
     return product.price * quantity;
   }
@@ -25,13 +33,13 @@ function OrderTable(props) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Oder ID</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Product</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Gross Price</TableCell>
-            <TableCell>Address</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell className={classes.tableHead}>Oder ID</TableCell>
+            <TableCell className={classes.tableHead}>Status</TableCell>
+            <TableCell className={classes.tableHead}>Product</TableCell>
+            <TableCell className={classes.tableHead}>Quantity</TableCell>
+            <TableCell className={classes.tableHead}>Gross Price</TableCell>
+            <TableCell className={classes.tableHead}>Address</TableCell>
+            <TableCell className={classes.tableHead}>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -1,13 +1,15 @@
 import { Fragment } from "react";
-import { useSelector } from "react-redux";
 import Address from "./Address";
 import ProductTile from "./ProductTile";
 
 function OrderDetails(props) {
-  const { address, product, quantity, onQuantityChange } = props.order;
+  const { address, product, quantity, onQuantityChange, status, remark } =
+    props.order;
 
   return (
     <Fragment>
+      <p>Status: {status}</p>
+      <p>Remark: {remark || "No remarks"}</p>
       <h2>Address</h2>
       {!!address && <Address address={address} />}
       <h2>Product</h2>
