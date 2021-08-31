@@ -33,7 +33,7 @@ function OrderTable(props) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell className={classes.tableHead}>Oder ID</TableCell>
+            <TableCell className={classes.tableHead}>Order ID</TableCell>
             <TableCell className={classes.tableHead}>Status</TableCell>
             <TableCell className={classes.tableHead}>Product</TableCell>
             <TableCell className={classes.tableHead}>Quantity</TableCell>
@@ -49,10 +49,9 @@ function OrderTable(props) {
               <TableCell>{order.status}</TableCell>
               <TableCell>{order.product.name}</TableCell>
               <TableCell>{order.quantity}</TableCell>
-              <TableCell>{`₹ ${computePrice(
-                order.product,
-                order.quantity
-              )}`}</TableCell>
+              <TableCell>{`₹ ${Number(
+                computePrice(order.product, order.quantity)
+              ).toLocaleString("en-IN")}`}</TableCell>
               <TableCell>{computeAddressString(order.address)}</TableCell>
               <TableCell>{order.actions}</TableCell>
             </TableRow>

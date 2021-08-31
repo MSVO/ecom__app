@@ -1,4 +1,12 @@
-import { Button, Card, CardActions, Grid, makeStyles } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardActions,
+  Container,
+  Grid,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../api/api";
@@ -63,6 +71,11 @@ function AddressesPage(props) {
               </CardActions>
             </Card>
           ))}
+        {(!addresses || addresses.length === 0) && (
+          <Container fullWidth>
+            <Typography variant="h5">Nothing to see here</Typography>
+          </Container>
+        )}
       </Grid>
     </SideNavLayout>
   );

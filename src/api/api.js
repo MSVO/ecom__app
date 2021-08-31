@@ -254,6 +254,7 @@ async function putProduct({
   description,
   price,
   stockQuantity,
+  imageUrl,
 }) {
   const responseBody = await apiPut({
     path: `/products/${productId}`,
@@ -263,6 +264,7 @@ async function putProduct({
       description,
       price,
       stockQuantity,
+      imageUrl,
     },
   });
   return responseBody.updatedProduct;
@@ -274,6 +276,7 @@ async function createProduct({
   description,
   price,
   stockQuantity,
+  imageUrl,
 }) {
   const responseBody = await apiPost({
     path: `/products/`,
@@ -283,6 +286,7 @@ async function createProduct({
       description,
       price,
       stockQuantity,
+      imageUrl,
     },
   });
   return responseBody.createdProduct;

@@ -9,6 +9,7 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
+import { InfoOutlined } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -32,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
+  },
+  logo: {
+    height: 50,
+    margin: theme.spacing(2),
+  },
+  logoText: {
+    margin: theme.spacing(2),
+    marginTop: 0,
+    marginLeft: theme.spacing(4),
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -70,7 +80,15 @@ function SideNavLayout(props) {
 
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <div className={classes.toolbar}>
+        <img
+          className={classes.logo}
+          src="https://banner2.cleanpng.com/20180926/qau/kisspng-computer-icons-scalable-vector-graphics-applicatio-tynor-wrist-splint-ambidextrous-rs-274-wrist-s-5bac3149dcb297.944285061538011465904.jpg"
+        />
+        <Typography variant="h5" className={classes.logoText}>
+          E-Shop
+        </Typography>
+      </div>
       <NavMenu />
     </div>
   );

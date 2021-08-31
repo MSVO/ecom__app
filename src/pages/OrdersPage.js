@@ -1,9 +1,13 @@
 import {
   Button,
   CardActions,
+  Container,
   Dialog,
   Divider,
   makeStyles,
+  Menu,
+  MenuItem,
+  Typography,
 } from "@material-ui/core";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -192,7 +196,12 @@ function OrdersPage(props) {
   }, [auth.token, auth.roles, queryString]);
   return (
     <SideNavLayout>
-      <OrderTable orders={orders} />
+      {orders && orders.length > 0 && <OrderTable orders={orders} />}
+      {(!orders || orders.length === 0) && (
+        <Container fullWidth>
+          <Typography variant="h5">Nothing to see here</Typography>
+        </Container>
+      )}
       <Dialog fullWidth open={modal.open} onClose={handleModalClose}>
         <div className={classes.dialogContent}>{modal.body}</div>
       </Dialog>

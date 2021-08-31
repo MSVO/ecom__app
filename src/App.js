@@ -4,6 +4,7 @@ import AddAddressPage from "./pages/AddAddressPage";
 import AddressesPage from "./pages/AddressesPage";
 import AuthenticationPage from "./pages/AuthenticationPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import ContactPage from "./pages/ContactPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import OrdersPage from "./pages/OrdersPage";
 import PastOrdersPage from "./pages/PastOrdersPage";
@@ -40,6 +41,9 @@ function App() {
         </Route>
         <Route exact path={routes.manageProducts.template}>
           <ProductsPage />
+        </Route>
+        <Route exact path={routes.contactUs.template}>
+          <ContactPage />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -71,7 +71,7 @@ function CheckoutPage() {
         viewName: SIGNIN,
         title: "Sign In / Sign Up",
         message: {
-          severity: "info",
+          severity: "warning",
           text: "Please sign in to continue with the purchase",
         },
       });
@@ -89,7 +89,7 @@ function CheckoutPage() {
           viewManager.pushCurrentAndNavigate({
             viewName: ADD_ADDRESS,
             message: {
-              severity: "info",
+              severity: "warning",
               text: "Please add one delivery address to continue with the purchase",
             },
           });

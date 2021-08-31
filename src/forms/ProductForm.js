@@ -9,6 +9,7 @@ function ProductForm(props) {
     description: useRef(),
     price: useRef(),
     stock_quantity: useRef(),
+    imageUrl: useRef(),
   };
 
   function submitHandler(event) {
@@ -19,6 +20,7 @@ function ProductForm(props) {
       description: refs.description.current.value,
       price: refs.price.current.value,
       stock_quantity: refs.stock_quantity.current.value,
+      imageUrl: refs.imageUrl.current.value,
     });
   }
 
@@ -51,6 +53,17 @@ function ProductForm(props) {
         label="Description"
         variant="outlined"
         defaultValue={product.description}
+      />
+      <TextField
+        inputRef={refs.imageUrl}
+        fullWidth
+        margin="normal"
+        size="small"
+        type="text"
+        id="imageUrl"
+        label="Image url"
+        variant="outlined"
+        defaultValue={product.imageUrl}
       />
       <TextField
         inputRef={refs.price}

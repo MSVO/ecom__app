@@ -37,7 +37,7 @@ function AddAddressPage(props) {
       <Grid xs={6}>
         <h1>Add an Address</h1>
         {currentView.message && (
-          <Alert severity={currentView.message.type}>
+          <Alert severity={currentView.message.severity}>
             {currentView.message.text}
           </Alert>
         )}

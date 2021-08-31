@@ -20,7 +20,9 @@ function OrderDetails(props) {
         />
       )}
       <h2>Total Price</h2>
-      {!!product && <p>Rs. {product.price * quantity}</p>}
+      {!!product && (
+        <p>₹ {Number(product.price * quantity).toLocaleString("en-IN")}</p>
+      )}
     </Fragment>
   );
 }

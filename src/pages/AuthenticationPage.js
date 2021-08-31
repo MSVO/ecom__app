@@ -53,7 +53,7 @@ function AuthenticationPage(props) {
     <SideNavLayout>
       <Grid item xs={4}>
         {currentView.message && (
-          <Alert severity={currentView.message.type}>
+          <Alert severity={currentView.message.severity}>
             {currentView.message.text}
           </Alert>
         )}

@@ -15,7 +15,7 @@ import api from "../api/api";
 import ProductSearcher from "../components/ProductSearcher";
 import ProductTile from "../components/ProductTile";
 import ProductForm from "../forms/ProductForm";
-import useViewManager, { CHECKOUT } from "../hooks/useViewManager";
+import useViewManager, { CHECKOUT, LANDING } from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
 import { clearCartAndAddProduct } from "../store/cartSlice";
 
@@ -73,6 +73,13 @@ function ProductsPage() {
   );
 
   useEffect(() => {
+    // if (!auth.token || !isAdmin) {
+    //   viewManager.navigateTo({
+    //     viewName: LANDING,
+    //     queryString: "",
+    //   })
+    //   return;
+    // }
     api
       .fetchProducts()
       .then((products) => {
@@ -105,7 +112,7 @@ function ProductsPage() {
   }
 
   function submitEditHandler(fields, localIndex) {
-    const { id, name, description, price, stock_quantity } = fields;
+    const { id, name, description, price, stock_quantity, imageUrl } = fields;
     api
       .putProduct({
         token: auth.token,
@@ -114,14 +121,17 @@ function ProductsPage() {
         description,
         price,
         stockQuantity: stock_quantity,
+        imageUrl,
       })
       .then((updatedProduct) => {
-        const { name, description, price, stock_quantity } = updatedProduct;
+        const { name, description, price, stock_quantity, imageUrl } =
+          updatedProduct;
         updateLocalProduct(id, localIndex, {
           name,
           description,
           price,
           stock_quantity,
+          imageUrl,
         });
         modalCloseHandler();
       })
@@ -168,7 +178,13 @@ function ProductsPage() {
     setModal({ open: false });
   }
   function submitNewProductFormHandler(fields) {
-    const { name, description, price, stock_quantity: stockQuantity } = fields;
+    const {
+      name,
+      description,
+      price,
+      stock_quantity: stockQuantity,
+      imageUrl,
+    } = fields;
     api
       .createProduct({
         token: auth.token,
@@ -176,6 +192,7 @@ function ProductsPage() {
         description,
         price,
         stockQuantity,
+        imageUrl,
       })
       .then((product) => {
         product.quantity = product.stock_quantity;

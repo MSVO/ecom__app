@@ -66,6 +66,14 @@ const manageProducts = {
   },
 };
 
+const contactUs = {
+  name: "contactUs",
+  template: "/contact",
+  buildPath: () => {
+    return "/contact";
+  },
+};
+
 const routes = {
   landing,
   checkout,
@@ -76,6 +84,7 @@ const routes = {
   pastOrders,
   manageOrders,
   manageProducts,
+  contactUs,
 };
 
 export default routes;

@@ -22,6 +22,7 @@ const ADDRESSES = "addresses";
 const PAST_ORDERS = "pastOrders";
 const MANAGE_ORDERS = "manageOrders";
 const MANAGE_PRODUCTS = "manageProducts";
+const CONTACT = "contactUs";
 
 function useViewManager() {
   const history = useHistory();
@@ -64,7 +65,11 @@ function useViewManager() {
         // case PAST_ORDERS:
         //   history.push(routes.pastOrders.buildPath());
         default:
-          history.push(routes[viewName].buildPath());
+          if (viewName) {
+            history.push(routes[viewName].buildPath());
+          } else {
+            history.push(routes.landing.buildPath());
+          }
           break;
       }
     }
@@ -125,5 +130,6 @@ export {
   PAST_ORDERS,
   MANAGE_ORDERS,
   MANAGE_PRODUCTS,
+  CONTACT,
 };
 export default useViewManager;

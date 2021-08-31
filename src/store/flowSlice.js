@@ -1,15 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { LANDING } from "../hooks/useViewManager";
 
-const initialState = {
-  nextView: null,
-  forwardViewStack: [],
-  currentView: null,
-  currentViewParams: null,
-};
 export const flowSlice = createSlice({
   name: "flow",
-  initialState,
+  initialState: {
+    nextView: null,
+    forwardViewStack: [],
+    currentView: { viewName: "landing", queryString: "" },
+    currentViewParams: null,
+  },
   reducers: {
     setNextView: (state, action) => {
       state.nextView = action.payload;
@@ -35,6 +34,10 @@ export const flowSlice = createSlice({
       state.forwardViewStack = [];
     },
     resetFlow: (state) => {
+      state.currentView = {
+        viewName: "landing",
+        queryString: "",
+      };
       state.nextView = null;
       state.forwardViewStack = [];
     },

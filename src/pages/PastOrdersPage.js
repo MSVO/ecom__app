@@ -1,4 +1,4 @@
-import { Button, Grid } from "@material-ui/core";
+import { Button, Container, Grid, Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../api/api";
@@ -40,7 +40,12 @@ function PastOrdersPage(props) {
   return (
     <SideNavLayout>
       <Grid container xs={8}>
-        <OrderTable orders={orders} />
+        {!!orders && orders.length > 0 && <OrderTable orders={orders} />}
+        {(!orders || orders.length === 0) && (
+          <Container fullWidth>
+            <Typography variant="h5">Nothing to see here</Typography>
+          </Container>
+        )}
       </Grid>
     </SideNavLayout>
   );

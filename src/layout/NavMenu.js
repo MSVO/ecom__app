@@ -7,12 +7,13 @@ import {
   ListItemText,
   makeStyles,
 } from "@material-ui/core";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import useViewManager, {
   ADDRESSES,
   ADD_ADDRESS,
   CHECKOUT,
+  CONTACT,
   LANDING,
   MANAGE_ORDERS,
   MANAGE_PRODUCTS,
@@ -24,6 +25,9 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import StoreMallDirectoryIcon from "@material-ui/icons/StoreMallDirectory";
 import HistoryIcon from "@material-ui/icons/History";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import StoreIcon from "@material-ui/icons/Store";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { ExpandLess, ExpandMore, Receipt } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
@@ -37,7 +41,7 @@ function NavMenu(props) {
 
   const auth = useSelector((state) => state.auth);
   const isAdmin = auth.roles.includes("ROLE_ADMIN");
-
+  const [ordersMenuOpen, setOrdersMenuOpen] = useState(false);
   function homeButtonHandler() {
     viewManager.navigateTo({ viewName: LANDING });
   }
@@ -97,6 +101,12 @@ function NavMenu(props) {
     });
   }
 
+  function contactButtonHandler() {
+    viewManager.navigateTo({
+      viewName: CONTACT,
+    });
+  }
+
   const accountSubMenu = (
     <Fragment>
       {!!auth.token && (
@@ -132,7 +142,9 @@ function NavMenu(props) {
                     key={"addaddress"}
                     onClick={addAddressButtonHandler}
                   >
-                    <ListItemIcon></ListItemIcon>
+                    <ListItemIcon>
+                      <AddCircleOutlineIcon />
+                    </ListItemIcon>
                     <ListItemText primary="Add New" />
                   </ListItem>
                 </List>
@@ -151,11 +163,28 @@ function NavMenu(props) {
           )}
           {isAdmin && (
             <Fragment>
-              <ListItem key="manageOrders">
-                <ListItemIcon></ListItemIcon>
-                <ListItemText>Orders</ListItemText>
+              <ListItem
+                button
+                key="manageProducts"
+                onClick={manageProductsButtonHandler}
+              >
+                <ListItemIcon>
+                  <StoreIcon />
+                </ListItemIcon>
+                <ListItemText>Products</ListItemText>
               </ListItem>
-              <Collapse in={true} className={classes.nested}>
+              <ListItem
+                button
+                key="manageOrders"
+                onClick={() => setOrdersMenuOpen((value) => !value)}
+              >
+                <ListItemIcon>
+                  <Receipt />
+                </ListItemIcon>
+                <ListItemText>Orders</ListItemText>
+                {ordersMenuOpen ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={ordersMenuOpen} className={classes.nested}>
                 <List component="div" disablePadding>
                   <ListItem
                     button
@@ -183,14 +212,6 @@ function NavMenu(props) {
                   <ListItemText primary="Rejected" />
                 </ListItem>
               </Collapse>
-              <ListItem
-                button
-                key="manageProducts"
-                onClick={manageProductsButtonHandler}
-              >
-                <ListItemIcon></ListItemIcon>
-                <ListItemText>Products</ListItemText>
-              </ListItem>
             </Fragment>
           )}
           <ListItem button key={"signOut"} onClick={signOutButtonHandler}>
@@ -222,6 +243,12 @@ function NavMenu(props) {
           <ListItemIcon></ListItemIcon>
           <ListItemText primary={"Home"} />
         </ListItem>
+        {!isAdmin && (
+          <ListItem button key={"contact"} onClick={contactButtonHandler}>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText primary={"Support"}></ListItemText>
+          </ListItem>
+        )}
       </List>
       <Divider />
       {accountSubMenu}
