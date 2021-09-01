@@ -19,10 +19,14 @@ function PastOrdersPage(props) {
   }
 
   function transformOrders(orders) {
-    return orders.map((order) => ({
-      ...order,
-      actions: <Button onClick={() => viewAction(order.id)}>View</Button>,
-    }));
+    return orders
+      .sort((i1, i2) => i2.id - i1.id)
+      .map((order) => ({
+        ...order,
+        actions: (
+          <Button onClick={() => viewAction(order.id)}>SEE DETAILS</Button>
+        ),
+      }));
   }
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../api/api";
 import Address from "../components/Address";
+import useViewManager, { ADD_ADDRESS } from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AddressesPage(props) {
   const classes = useStyles();
-
+  const viewManager = useViewManager();
   const auth = useSelector((state) => state.auth);
   const [addresses, setAddresses] = useState([]);
 
@@ -56,6 +57,18 @@ function AddressesPage(props) {
 
   return (
     <SideNavLayout>
+      <Button
+        style={{ marginLeft: "1em" }}
+        variant="contained"
+        color="primary"
+        onClick={() =>
+          viewManager.pushCurrentAndNavigate({ viewName: ADD_ADDRESS })
+        }
+      >
+        Add New
+      </Button>
+      <br />
+      <br />
       <Grid container direction="column" xs={4}>
         {!!addresses &&
           addresses.map((address, index) => (
