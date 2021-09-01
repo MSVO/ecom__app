@@ -11,21 +11,20 @@ import {
   Tooltip,
   Typography,
 } from "@material-ui/core";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { blue, yellow } from "@material-ui/core/colors";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import api from "../api/api";
+import useMySnackbar from "../hooks/useMySnackbar";
+import useViewManager, { CHECKOUT } from "../hooks/useViewManager";
 import {
   addProduct,
   changeQuantity,
   clearCartAndAddProduct,
   removeProduct,
 } from "../store/cartSlice";
-import { useSnackbar } from "notistack";
-import useMySnackbar from "../hooks/useMySnackbar";
-import { blue, yellow } from "@material-ui/core/colors";
-import useViewManager, { CHECKOUT } from "../hooks/useViewManager";
-import api from "../api/api";
 import { isWithinRange } from "../validation/validation";
 
 const useStyles = makeStyles((theme) => ({

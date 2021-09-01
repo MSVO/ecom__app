@@ -1,8 +1,6 @@
 import { Button } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
-import { useSnackbar } from "notistack";
-import { Fragment } from "react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../api/api";
 import ChooseAddressDialog from "../components/ChooseAddressDialog";
@@ -10,12 +8,11 @@ import OrderDetails from "../components/OrderDetails";
 import useMySnackbar from "../hooks/useMySnackbar";
 import useViewManager, {
   ADD_ADDRESS,
-  ORDER,
   PAST_ORDERS,
   SIGNIN,
 } from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
-import { clearCart, removeProduct } from "../store/cartSlice";
+import { removeProduct } from "../store/cartSlice";
 
 function CheckoutPage() {
   const dispatch = useDispatch();

@@ -1,10 +1,9 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
-import { green, grey } from "@material-ui/core/colors";
+import { green } from "@material-ui/core/colors";
 import { Alert } from "@material-ui/lab";
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../api/api";
-import cartReducer from "../store/cartSlice";
 import Address from "./Address";
 import ProductTile from "./ProductTile";
 import StatusStepper from "./StatusStepper";

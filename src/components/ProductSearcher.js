@@ -1,6 +1,6 @@
 import { FilledInput, IconButton, InputAdornment } from "@material-ui/core";
-import { useRef } from "react";
 import SearchIcon from "@material-ui/icons/Search";
+import { useRef } from "react";
 
 function ProductSearcher(props) {
   const searchTextRef = useRef();

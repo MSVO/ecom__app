@@ -1,5 +1,4 @@
 import { Step, StepLabel, Stepper } from "@material-ui/core";
-import { Fragment } from "react";
 
 function StatusStepper(props) {
   const { status } = props;

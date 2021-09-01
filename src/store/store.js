@@ -1,19 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
-import persistReducer from "redux-persist/es/persistReducer";
-import authReducer from "./authSlice";
-import cartReducer from "./cartSlice";
-import flowReducer from "./flowSlice";
-import storage from "redux-persist/lib/storage";
-import persistStore from "redux-persist/es/persistStore";
 import {
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from "redux-persist";
-import thunk from "redux-thunk";
+import persistReducer from "redux-persist/es/persistReducer";
+import persistStore from "redux-persist/es/persistStore";
+import storage from "redux-persist/lib/storage";
+import authReducer from "./authSlice";
+import cartReducer from "./cartSlice";
+import flowReducer from "./flowSlice";
 
 const persistAuthConfig = {
   key: "auth",

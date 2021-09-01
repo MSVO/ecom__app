@@ -15,7 +15,7 @@ import api from "../api/api";
 import ProductSearcher from "../components/ProductSearcher";
 import ProductTile from "../components/ProductTile";
 import ProductForm from "../forms/ProductForm";
-import useViewManager, { CHECKOUT, LANDING } from "../hooks/useViewManager";
+import useViewManager, { CHECKOUT } from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
 import { clearCartAndAddProduct } from "../store/cartSlice";
 

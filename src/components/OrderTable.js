@@ -1,9 +1,6 @@
 import {
-  Card,
   CardContent,
   CardMedia,
-  Collapse,
-  IconButton,
   makeStyles,
   Paper,
   Table,
@@ -14,13 +11,11 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import { Fragment, useState } from "react";
-import StatusStepper from "./StatusStepper";
-import { KeyboardArrowDown, KeyboardArrowUp } from "@material-ui/icons";
-import { useSelector } from "react-redux";
-import authReducer from "../store/authSlice";
-import { PAST_ORDERS } from "../hooks/useViewManager";
 import { green } from "@material-ui/core/colors";
+import { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
+import { PAST_ORDERS } from "../hooks/useViewManager";
+import StatusStepper from "./StatusStepper";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {

@@ -9,7 +9,6 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
-import { InfoOutlined } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { useSelector } from "react-redux";

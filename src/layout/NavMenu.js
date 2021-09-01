@@ -8,6 +8,16 @@ import {
   ListItemText,
   makeStyles,
 } from "@material-ui/core";
+import { ExpandLess, ExpandMore, Receipt } from "@material-ui/icons";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import HistoryIcon from "@material-ui/icons/History";
+import HomeIcon from "@material-ui/icons/Home";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import StoreIcon from "@material-ui/icons/Store";
+import StoreMallDirectoryIcon from "@material-ui/icons/StoreMallDirectory";
 import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
 import useViewManager, {
@@ -21,16 +31,6 @@ import useViewManager, {
   PAST_ORDERS,
   SIGNIN,
 } from "../hooks/useViewManager";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import StoreMallDirectoryIcon from "@material-ui/icons/StoreMallDirectory";
-import HistoryIcon from "@material-ui/icons/History";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import StoreIcon from "@material-ui/icons/Store";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import { ExpandLess, ExpandMore, Receipt } from "@material-ui/icons";
-import ContactSupportIcon from "@material-ui/icons/ContactSupport";
-import HomeIcon from "@material-ui/icons/Home";
 const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),

@@ -3,7 +3,6 @@ import { Autocomplete } from "@material-ui/lab";
 import { Fragment, useRef } from "react";
 import { useSelector } from "react-redux";
 import api from "../api/api";
-import ProductSearcher from "../components/ProductSearcher";
 
 function OrderActions(props) {
   const { order } = props;
