@@ -1,29 +1,35 @@
 import { Button } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
+import { useSnackbar } from "notistack";
+import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../api/api";
 import ChooseAddressDialog from "../components/ChooseAddressDialog";
 import OrderDetails from "../components/OrderDetails";
+import useMySnackbar from "../hooks/useMySnackbar";
 import useViewManager, {
   ADD_ADDRESS,
   ORDER,
+  PAST_ORDERS,
   SIGNIN,
 } from "../hooks/useViewManager";
 import SideNavLayout from "../layout/SideNavLayout";
-import { clearCart } from "../store/cartSlice";
+import { clearCart, removeProduct } from "../store/cartSlice";
 
 function CheckoutPage() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const products = useSelector((state) => state.cart.products);
   const [product, setProduct] = useState();
   const auth = useSelector((state) => state.auth);
   const viewManager = useViewManager();
   const [quantity, setQuantity] = useState(1);
+  const { enqueueSnackbar } = useMySnackbar();
   const [addressChooser, setAddressChooser] = useState({
     open: false,
     addresses: null,
   });
-
   const [deliveryAddress, setDeliveryAddress] = useState({
     id: null,
     name: null,
@@ -32,6 +38,34 @@ function CheckoutPage() {
     email: null,
     mobile: null,
   });
+
+  useEffect(() => {
+    api.fetchAddressesOfAuthenticatedUser(auth.token).then((addresses) => {
+      if (addresses.length >= 1) {
+        setDeliveryAddress(addresses[addresses.length - 1]);
+      } else {
+        viewManager.pushCurrentAndNavigate({
+          viewName: ADD_ADDRESS,
+          message: {
+            text: "Please add an address to continue purchase",
+            severity: "warning",
+          },
+        });
+      }
+    });
+  }, []);
+
+  if (!auth.token) {
+    viewManager.pushCurrentAndNavigate({
+      viewName: SIGNIN,
+      title: "Sign In / Sign Up",
+      message: {
+        severity: "warning",
+        text: "Please sign in to continue with the purchase",
+      },
+    });
+    return;
+  }
 
   function quantityChangeHandler(newQuantity) {
     setQuantity(newQuantity);
@@ -65,18 +99,7 @@ function CheckoutPage() {
       });
   }
 
-  useEffect(() => {
-    if (!auth.token) {
-      viewManager.pushCurrentAndNavigate({
-        viewName: SIGNIN,
-        title: "Sign In / Sign Up",
-        message: {
-          severity: "warning",
-          text: "Please sign in to continue with the purchase",
-        },
-      });
-      return;
-    }
+  function showAddressPicker() {
     api
       .fetchAddressesOfAuthenticatedUser(auth.token)
       .then((addresses) => {
@@ -98,36 +121,25 @@ function CheckoutPage() {
       .catch((e) => {
         throw e;
       });
-    if (cart.products.length >= 1) {
+  }
+
+  function placeOrderHandler() {
+    let promises = products.map((p) => {
       api
-        .fetchProduct(cart.products[0].id)
-        .then((product) => {
-          setProduct({
-            ...product,
-            quantity: 1,
+        .createOrderUsingToken(auth.token, deliveryAddress.id, p.id, p.quantity)
+        .then((order) => {
+          dispatch(removeProduct(p.id));
+          enqueueSnackbar(`Order placed for ${order.product.name}`, {
+            variant: "success",
           });
         })
         .catch((e) => {
-          throw e;
+          enqueueSnackbar("An item couldn't be ordered", { variant: "error" });
         });
-    }
-  }, [auth.token, cart.products]);
-
-  function placeOrderHandler() {
-    api
-      .createOrderUsingToken(
-        auth.token,
-        deliveryAddress.id,
-        product.id,
-        quantity
-      )
-      .then((createdOrder) => {
-        dispatch(clearCart());
-        viewManager.navigateTo({ viewName: ORDER, orderId: createdOrder.id });
-      })
-      .catch((e) => {
-        throw e;
-      });
+    });
+    Promise.allSettled(promises).then(() => {
+      viewManager.navigateTo({ viewName: PAST_ORDERS, title: "Your Orders" });
+    });
   }
 
   return (
@@ -137,21 +149,30 @@ function CheckoutPage() {
       <OrderDetails
         order={{
           address: deliveryAddress,
-          product: product,
+          products: products,
           quantity: quantity,
-          onQuantityChange: quantityChangeHandler,
+          showCartActions: true,
+          showAddressPicker: showAddressPicker,
         }}
+        actions={
+          <Fragment>
+            {products.length > 1 && (
+              <Alert severity="info">
+                {products.length} seperate orders will be placed.
+              </Alert>
+            )}
+            <Button
+              style={{ marginTop: "1em" }}
+              variant="contained"
+              color="secondary"
+              onClick={placeOrderHandler}
+              disabled={products.length < 1}
+            >
+              Place Order
+            </Button>
+          </Fragment>
+        }
       />
-
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={placeOrderHandler}
-        disabled={!product}
-      >
-        Place Order
-      </Button>
-
       <ChooseAddressDialog
         open={addressChooser.open}
         addresses={addressChooser.addresses}

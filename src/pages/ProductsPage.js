@@ -50,6 +50,7 @@ function ProductsPage() {
     dispatch(
       clearCartAndAddProduct({
         id: product.id,
+        quantity: 1,
       })
     );
     viewManager.navigateTo({
@@ -274,6 +275,7 @@ function ProductsPage() {
               //     <EditIcon fontSize="small" />
               //   </IconButton>
               // }
+              showCartButton={!isAdmin}
             />
           </Grid>
         ))}

@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Card,
   CardActionArea,
   Dialog,
@@ -6,6 +8,8 @@ import {
   List,
   makeStyles,
 } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
+import useViewManager, { ADD_ADDRESS } from "../hooks/useViewManager";
 import Address from "./Address";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function ChooseAddressDialog(props) {
+  const viewManager = useViewManager();
   const { title, open, addresses } = props;
   const classes = useStyles();
 
@@ -33,17 +38,34 @@ function ChooseAddressDialog(props) {
       open={open}
       className={classes.root}
     >
-      <DialogTitle id={`dialogTitle`}>{title}</DialogTitle>
-      <List>
-        {!!addresses &&
-          addresses.map((address) => (
-            <Card key={address.id} className={classes.card}>
-              <CardActionArea onClick={() => props.onClose(address.id)}>
-                <Address address={address} />
-              </CardActionArea>
-            </Card>
-          ))}
-      </List>
+      <Box style={{ padding: "1em", backgroundColor: grey[200] }}>
+        <DialogTitle id={`dialogTitle`}>{title}</DialogTitle>
+        <List>
+          {!!addresses &&
+            addresses.map((address) => (
+              <Card key={address.id} className={classes.card}>
+                <CardActionArea onClick={() => props.onClose(address.id)}>
+                  <Address address={address} />
+                </CardActionArea>
+              </Card>
+            ))}
+          <Button
+            onClick={() =>
+              viewManager.pushCurrentAndNavigate({
+                viewName: ADD_ADDRESS,
+                message: {
+                  text: "Please add an address to continue purchase",
+                  severity: "warning",
+                },
+              })
+            }
+            variant="outlined"
+            color="primary"
+          >
+            Add New
+          </Button>
+        </List>
+      </Box>
     </Dialog>
   );
 }

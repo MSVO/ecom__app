@@ -1,4 +1,5 @@
 import {
+  Badge,
   Collapse,
   Divider,
   List,
@@ -28,6 +29,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import StoreIcon from "@material-ui/icons/Store";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { ExpandLess, ExpandMore, Receipt } from "@material-ui/icons";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import HomeIcon from "@material-ui/icons/Home";
 const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
@@ -41,13 +44,14 @@ function NavMenu(props) {
 
   const auth = useSelector((state) => state.auth);
   const isAdmin = auth.roles.includes("ROLE_ADMIN");
+  const cartBadgeNumber = useSelector((state) => state.cart.products.length);
   const [ordersMenuOpen, setOrdersMenuOpen] = useState(false);
   function homeButtonHandler() {
     viewManager.navigateTo({ viewName: LANDING });
   }
 
   function cartButtonHandler() {
-    viewManager.navigateTo(CHECKOUT);
+    viewManager.navigateTo({ viewName: CHECKOUT });
   }
 
   function signOutButtonHandler() {
@@ -119,12 +123,6 @@ function NavMenu(props) {
           </ListItem>
           {!isAdmin && (
             <Fragment>
-              <ListItem button key={"checkout"} onClick={cartButtonHandler}>
-                <ListItemIcon>
-                  <ShoppingCartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Checkout" />
-              </ListItem>
               <ListItem
                 button
                 key={"addresses"}
@@ -240,18 +238,35 @@ function NavMenu(props) {
       <Divider />
       <List>
         <ListItem button key={"home"} onClick={homeButtonHandler}>
-          <ListItemIcon></ListItemIcon>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
           <ListItemText primary={"Home"} />
         </ListItem>
         {!isAdmin && (
-          <ListItem button key={"contact"} onClick={contactButtonHandler}>
-            <ListItemIcon></ListItemIcon>
-            <ListItemText primary={"Support"}></ListItemText>
+          <ListItem button key={"checkout"} onClick={cartButtonHandler}>
+            <ListItemIcon>
+              <Badge badgeContent={cartBadgeNumber} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </ListItemIcon>
+            <ListItemText primary="Checkout" />
           </ListItem>
         )}
       </List>
       <Divider />
       {accountSubMenu}
+      <Divider />
+      <List>
+        {!isAdmin && (
+          <ListItem button key={"contact"} onClick={contactButtonHandler}>
+            <ListItemIcon>
+              <ContactSupportIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Get Help"}></ListItemText>
+          </ListItem>
+        )}
+      </List>
     </Fragment>
   );
 

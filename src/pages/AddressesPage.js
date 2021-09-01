@@ -16,6 +16,7 @@ import SideNavLayout from "../layout/SideNavLayout";
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: theme.spacing(2),
+    maxWidth: 500,
   },
 }));
 
@@ -58,9 +59,11 @@ function AddressesPage(props) {
       <Grid container direction="column" xs={4}>
         {!!addresses &&
           addresses.map((address, index) => (
-            <Card className={classes.card} key={address.id}>
-              <Address address={address} />
-              <CardActions>
+            <Address
+              className={classes.card}
+              key={address.id}
+              address={address}
+              actions={
                 <Button
                   color="secondary"
                   variant="outlined"
@@ -68,8 +71,8 @@ function AddressesPage(props) {
                 >
                   Delete
                 </Button>
-              </CardActions>
-            </Card>
+              }
+            />
           ))}
         {(!addresses || addresses.length === 0) && (
           <Container fullWidth>
