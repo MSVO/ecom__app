@@ -9,12 +9,12 @@ import {
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import api from "../api/api";
-import OrderDetails from "../components/OrderDetails";
-import OrderTable from "../components/OrderTable";
-import OrderActions from "../forms/OrderActions";
-import useViewManager, { LANDING } from "../hooks/useViewManager";
-import SideNavLayout from "../layout/SideNavLayout";
+import api from "../../api/api";
+import OrderDetails from "../../components/OrderDetails";
+import OrderTable from "../../components/OrderTable";
+import OrderActions from "../../forms/OrderActions";
+import useViewManager, { LANDING } from "../../hooks/useViewManager";
+import SideNavLayout from "../../layout/SideNavLayout";
 
 const initialModal = {
   open: false,

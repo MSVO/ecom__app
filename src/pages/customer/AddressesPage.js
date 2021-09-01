@@ -7,10 +7,10 @@ import {
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import api from "../api/api";
-import Address from "../components/Address";
-import useViewManager, { ADD_ADDRESS } from "../hooks/useViewManager";
-import SideNavLayout from "../layout/SideNavLayout";
+import api from "../../api/api";
+import Address from "../../components/Address";
+import useViewManager, { ADD_ADDRESS } from "../../hooks/useViewManager";
+import SideNavLayout from "../../layout/SideNavLayout";
 
 const useStyles = makeStyles((theme) => ({
   card: {

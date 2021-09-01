@@ -1,10 +1,10 @@
 import { Grid } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useSelector } from "react-redux";
-import api from "../api/api";
-import AddressForm from "../forms/AddressForm";
-import useViewManager from "../hooks/useViewManager";
-import SideNavLayout from "../layout/SideNavLayout";
+import api from "../../api/api";
+import AddressForm from "../../forms/AddressForm";
+import useViewManager from "../../hooks/useViewManager";
+import SideNavLayout from "../../layout/SideNavLayout";
 
 function AddAddressPage(props) {
   const auth = useSelector((state) => state.auth);

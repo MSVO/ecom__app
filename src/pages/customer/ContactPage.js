@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import SideNavLayout from "../layout/SideNavLayout";
+import SideNavLayout from "../../layout/SideNavLayout";
 
 function ContactPage() {
   return (

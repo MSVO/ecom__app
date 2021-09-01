@@ -1,13 +1,16 @@
 import { Button, makeStyles, TextField } from "@material-ui/core";
 import { useRef } from "react";
 
+// Styles
 const useStyles = makeStyles((theme) => ({
   submit: {
     marginTop: theme.spacing(2),
   },
 }));
 
+// Component
 function AddressForm(props) {
+  // Vars
   const classes = useStyles();
   const refs = {
     name: useRef(),
@@ -17,6 +20,7 @@ function AddressForm(props) {
     mobile: useRef(),
   };
 
+  // Handlers
   function formSubmitHandler(event) {
     event.preventDefault();
     props.onSubmit(
@@ -25,6 +29,8 @@ function AddressForm(props) {
       )
     );
   }
+
+  // JSX
   return (
     <form onSubmit={formSubmitHandler}>
       <TextField

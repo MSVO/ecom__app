@@ -1,10 +1,10 @@
 import { Button, Container, Grid, Typography } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import api from "../api/api";
-import OrderTable from "../components/OrderTable";
-import useViewManager, { ORDER } from "../hooks/useViewManager";
-import SideNavLayout from "../layout/SideNavLayout";
+import api from "../../api/api";
+import OrderTable from "../../components/OrderTable";
+import useViewManager, { ORDER } from "../../hooks/useViewManager";
+import SideNavLayout from "../../layout/SideNavLayout";
 
 function PastOrdersPage(props) {
   const [orders, setOrders] = useState([]);

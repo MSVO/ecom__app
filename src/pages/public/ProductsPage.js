@@ -11,13 +11,13 @@ import Fuse from "fuse.js";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import api from "../api/api";
-import ProductSearcher from "../components/ProductSearcher";
-import ProductTile from "../components/ProductTile";
-import ProductForm from "../forms/ProductForm";
-import useViewManager, { CHECKOUT } from "../hooks/useViewManager";
-import SideNavLayout from "../layout/SideNavLayout";
-import { clearCartAndAddProduct } from "../store/cartSlice";
+import api from "../../api/api";
+import ProductSearcher from "../../components/ProductSearcher";
+import ProductTile from "../../components/ProductTile";
+import ProductForm from "../../forms/ProductForm";
+import useViewManager, { CHECKOUT } from "../../hooks/useViewManager";
+import SideNavLayout from "../../layout/SideNavLayout";
+import { clearCartAndAddProduct } from "../../store/cartSlice";
 
 const fuseOptions = {
   keys: ["name"],

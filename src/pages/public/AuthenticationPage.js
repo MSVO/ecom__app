@@ -2,11 +2,11 @@ import { Grid, Paper, Tab, Tabs } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import api from "../api/api";
-import UserCredentialsForm from "../forms/UserCredentialsForm";
-import useViewManager from "../hooks/useViewManager";
-import SideNavLayout from "../layout/SideNavLayout";
-import { setAuth } from "../store/authSlice";
+import api from "../../api/api";
+import UserCredentialsForm from "../../forms/UserCredentialsForm";
+import useViewManager from "../../hooks/useViewManager";
+import SideNavLayout from "../../layout/SideNavLayout";
+import { setAuth } from "../../store/authSlice";
 
 function AuthenticationPage(props) {
   const dispatch = useDispatch();

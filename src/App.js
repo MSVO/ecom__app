@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import AddAddressPage from "./pages/AddAddressPage";
-import AddressesPage from "./pages/AddressesPage";
-import AuthenticationPage from "./pages/AuthenticationPage";
-import CheckoutPage from "./pages/CheckoutPage";
-import ContactPage from "./pages/ContactPage";
-import OrderDetailsPage from "./pages/OrderDetailsPage";
-import OrdersPage from "./pages/OrdersPage";
-import PastOrdersPage from "./pages/PastOrdersPage";
-import ProductsPage from "./pages/ProductsPage";
+import AddAddressPage from "./pages/customer/AddAddressPage";
+import AddressesPage from "./pages/customer/AddressesPage";
+import AuthenticationPage from "./pages/public/AuthenticationPage";
+import CheckoutPage from "./pages/customer/CheckoutPage";
+import ContactPage from "./pages/customer/ContactPage";
+import OrderDetailsPage from "./pages/common/OrderDetailsPage";
+import OrdersPage from "./pages/admin/OrdersPage";
+import PastOrdersPage from "./pages/customer/PastOrdersPage";
+import ProductsPage from "./pages/public/ProductsPage";
 import routes from "./routes/routes";
 
 function App() {
