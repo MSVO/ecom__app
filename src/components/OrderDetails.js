@@ -1,11 +1,13 @@
 import { Button, Grid, makeStyles, Typography } from "@material-ui/core";
 import { green, grey } from "@material-ui/core/colors";
+import { Alert } from "@material-ui/lab";
 import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import api from "../api/api";
 import cartReducer from "../store/cartSlice";
 import Address from "./Address";
 import ProductTile from "./ProductTile";
+import StatusStepper from "./StatusStepper";
 
 const useStyles = makeStyles((theme) => ({
   gridItem: {
@@ -50,9 +52,11 @@ function OrderDetails(props) {
 
   return (
     <Fragment>
-      {status && <p>Status: {status}</p>}
-      {remark && <p>Remark: {remark || "No remarks"}</p>}
-      <Grid container>
+      {status && <StatusStepper status={status} />}
+      {remark && (
+        <Alert severity="info">Remark: {remark || "No remarks"}</Alert>
+      )}
+      <Grid container style={{ marginTop: "2em" }}>
         <Grid item xs={8}>
           {/* <Grid container>
             <Typography variant="h5">Products</Typography>
