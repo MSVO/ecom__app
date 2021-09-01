@@ -50,20 +50,6 @@ function useViewManager() {
             })
           );
           break;
-        // case SIGNIN:
-        //   history.push(routes.signIn.buildPath());
-        //   break;
-        // case CHECKOUT:
-        //   history.push(routes.checkout.buildPath());
-        //   break;
-        // case ADD_ADDRESS:
-        //   history.push(routes.addAddress.buildPath());
-        //   break;
-        // case ADDRESSES:
-        //   history.push(routes.addresses.buildPath());
-        //   break;
-        // case PAST_ORDERS:
-        //   history.push(routes.pastOrders.buildPath());
         default:
           if (viewName) {
             history.push(routes[viewName].buildPath());
@@ -78,13 +64,6 @@ function useViewManager() {
   const pushView = (viewName) => {
     dispatch(pushNextView(viewName));
   };
-  // const nextViewOrLanding = () => {
-  //   if (flow.forwardViewStack.length >= 1) {
-  //     return flow.forwardViewStack[flow.forwardViewStack.length - 1];
-  //   } else {
-  //     return LANDING;
-  //   }
-  // };
   const moveForward = () => {
     dispatch(popNextViewOrLandingToCurrent());
   };

@@ -74,13 +74,6 @@ function ProductsPage() {
   );
 
   useEffect(() => {
-    // if (!auth.token || !isAdmin) {
-    //   viewManager.navigateTo({
-    //     viewName: LANDING,
-    //     queryString: "",
-    //   })
-    //   return;
-    // }
     api
       .fetchProducts()
       .then((products) => {
@@ -265,16 +258,6 @@ function ProductsPage() {
                 )
               }
               actions={computeActions(product)}
-              // changeQuantityButton={
-              //   <IconButton
-              //     size="small"
-              //     onClick={() =>
-              //       changeQuantityButtonHandler(product.id, localIndex)
-              //     }
-              //   >
-              //     <EditIcon fontSize="small" />
-              //   </IconButton>
-              // }
               showCartButton={!isAdmin}
             />
           </Grid>

@@ -35,12 +35,6 @@ const useStyles = makeStyles((theme) => ({
 function computePrice(product, quantity) {
   return product.price * quantity;
 }
-function computeAddressString(address) {
-  if (!address) return "";
-  else {
-    return `${address.name}, ${address.fullAddress}`;
-  }
-}
 
 function Row(props) {
   const classes = useStyles();
@@ -54,7 +48,6 @@ function Row(props) {
             {order.id}
           </Typography>
         </TableCell>
-        {/* <TableCell>{order.status}</TableCell> */}
         <TableCell>
           <Typography variant="body1" style={{ fontWeight: 600 }}>
             {order.product.name}
@@ -76,7 +69,6 @@ function Row(props) {
             ).toLocaleString("en-IN")}`}
           </Typography>
         </TableCell>
-        {/* <TableCell>{computeAddressString(order.address)}</TableCell> */}
         <TableCell>{order.actions} </TableCell>
       </TableRow>
       {showStatus && (
@@ -110,11 +102,9 @@ function OrderTable(props) {
         <TableHead>
           <TableRow>
             <TableCell className={classes.tableHead}>Order ID</TableCell>
-            {/* <TableCell className={classes.tableHead}>Status</TableCell> */}
             <TableCell className={classes.tableHead}>Product</TableCell>
             <TableCell className={classes.tableHead}>Quantity</TableCell>
             <TableCell className={classes.tableHead}>Gross Price</TableCell>
-            {/* <TableCell className={classes.tableHead}>Address</TableCell> */}
             <TableCell className={classes.tableHead}>Actions</TableCell>
           </TableRow>
         </TableHead>

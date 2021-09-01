@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavMenu(props) {
+function NavMenu() {
   const classes = useStyles();
 
   const viewManager = useViewManager();

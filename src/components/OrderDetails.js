@@ -57,9 +57,6 @@ function OrderDetails(props) {
       )}
       <Grid container style={{ marginTop: "2em" }}>
         <Grid item xs={8}>
-          {/* <Grid container>
-            <Typography variant="h5">Products</Typography>
-          </Grid> */}
           <Grid container wrap="wrap" spacing={3}>
             {!!product && (
               <Grid item className={classes.gridItem} key={product.id}>
