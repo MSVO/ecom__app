@@ -4,6 +4,7 @@ const initialState = {
   token: null,
   name: "",
   roles: [],
+  userId: null,
 };
 export const authSlice = createSlice({
   name: "auth",
@@ -16,7 +17,7 @@ export const authSlice = createSlice({
       state.token = null;
     },
     setAuth: (state, action) => {
-      const { name, token, roles } = action.payload;
+      const { name, token, roles, userId } = action.payload;
       state.name = name;
       state.token = token;
       state.roles = roles;
@@ -25,6 +26,7 @@ export const authSlice = createSlice({
       state.token = initialState.token;
       state.name = initialState.name;
       state.roles = [];
+      state.userId = null;
     },
   },
 });

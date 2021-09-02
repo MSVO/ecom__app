@@ -16,7 +16,12 @@ function AuthenticationPage(props) {
 
   function authSuccessHandler({ email, token }) {
     dispatch(
-      setAuth({ token, name: email, roles: token.split(":")[1].split(";") })
+      setAuth({
+        token,
+        name: email,
+        roles: token.split(":")[1].split(";"),
+        userId: Number(token.split(":")[0]),
+      })
     );
     viewManager.moveForward();
   }

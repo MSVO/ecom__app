@@ -28,6 +28,40 @@ function useViewManager() {
   const history = useHistory();
   const dispatch = useDispatch();
   const flow = useSelector((state) => state.flow);
+  const isAdmin = useSelector((state) =>
+    state.auth.roles.includes("ROLE_ADMIN")
+  );
+  const isAuthenticated = useSelector((state) => !!state.auth.token);
+
+  const pushView = (viewName) => {
+    dispatch(pushNextView(viewName));
+  };
+  const moveForward = () => {
+    dispatch(popNextViewOrLandingToCurrent());
+  };
+  const discardStack = () => {
+    dispatch(discardNextViews());
+  };
+  const navigateTo = (view) => {
+    dispatch(discardNextViews());
+    dispatch(setCurrentView(view));
+  };
+  const navigateToLanding = () => {
+    navigateTo({ viewName: LANDING });
+  };
+  const promptSignIn = () => {
+    dispatch(pushCurrentView());
+    navigateTo(SIGNIN);
+  };
+  const pushCurrentAndNavigate = (destinationView) => {
+    dispatch(pushCurrentViewAndSetNew(destinationView));
+  };
+  const logout = () => {
+    navigateTo({ viewName: LANDING });
+    dispatch(clearCart());
+    dispatch(resetFlow());
+    dispatch(resetAuth());
+  };
 
   useEffect(() => {
     if (flow.currentView === null) {
@@ -38,11 +72,24 @@ function useViewManager() {
     } else if (typeof flow.currentView === "object") {
       const viewName = flow.currentView.viewName;
       switch (viewName) {
+        case CHECKOUT:
+          history.push(routes[viewName].buildPath(flow.currentView.orderId));
+          break;
         case ORDER:
           history.push(routes.order.buildPath(flow.currentView.orderId));
           break;
         case MANAGE_PRODUCTS:
         case MANAGE_ORDERS:
+          if (!isAdmin) {
+            navigateToLanding();
+            break;
+          }
+          history.push(
+            routes[viewName].buildPath({
+              queryString: flow.currentView.queryString || "",
+            })
+          );
+          break;
         case LANDING:
           history.push(
             routes[viewName].buildPath({
@@ -59,34 +106,8 @@ function useViewManager() {
           break;
       }
     }
-  }, [flow.currentView, history]);
+  }, [flow.currentView, history, isAdmin, isAuthenticated]);
 
-  const pushView = (viewName) => {
-    dispatch(pushNextView(viewName));
-  };
-  const moveForward = () => {
-    dispatch(popNextViewOrLandingToCurrent());
-  };
-  const discardStack = () => {
-    dispatch(discardNextViews());
-  };
-  const navigateTo = (view) => {
-    dispatch(discardNextViews());
-    dispatch(setCurrentView(view));
-  };
-  const promptSignIn = () => {
-    dispatch(pushCurrentView());
-    navigateTo(SIGNIN);
-  };
-  const pushCurrentAndNavigate = (destinationView) => {
-    dispatch(pushCurrentViewAndSetNew(destinationView));
-  };
-  const logout = () => {
-    navigateTo({ viewName: LANDING });
-    dispatch(clearCart());
-    dispatch(resetFlow());
-    dispatch(resetAuth());
-  };
   const viewManager = {
     pushView,
     moveForward,

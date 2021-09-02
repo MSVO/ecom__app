@@ -34,7 +34,8 @@ function OrderDetails(props) {
   console.log("Products for order:", products);
   const classes = useStyles();
 
-  // Calculating total price
+  // Calculating total price from cart
+  // TODO: The same componet is used to show order details, so total price become wrong there
   useEffect(() => {
     let promises = cart.products.map((p) => {
       return api.fetchProduct(p.id);
@@ -47,7 +48,7 @@ function OrderDetails(props) {
         .reduce((a, b) => [a[0] * a[1] + b[0] * b[1], 1], [0, 0]);
       setTotalPrice(total[0].toLocaleString("en-IN"));
     });
-  });
+  }, [cart.products]);
 
   return (
     <Fragment>
