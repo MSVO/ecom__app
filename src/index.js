@@ -7,13 +7,16 @@ import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import store, { persistor } from "./store/store";
+import { ConfirmationServiceProvider } from "./util/dialog/ConfirmationService";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SnackbarProvider maxSnack={3}>
-          <App />
+          <ConfirmationServiceProvider>
+            <App />
+          </ConfirmationServiceProvider>
         </SnackbarProvider>
       </PersistGate>
     </Provider>

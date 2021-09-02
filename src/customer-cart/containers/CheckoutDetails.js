@@ -13,6 +13,7 @@ import useViewManager, { PAST_ORDERS } from "../../hooks/useViewManager";
 import { removeProduct, setDeliveryAddress } from "../../store/cartSlice";
 import useMySnackbar from "../../util/notistack/useMySnackbar";
 import useAddressPicker from "./AddressPicker";
+import { useConfirmation } from "../../util/dialog/ConfirmationService";
 
 function CheckoutDetailsContainer(props) {
   const deliveryAddress = useSelector((state) => state.cart.deliveryAddress);
@@ -23,8 +24,9 @@ function CheckoutDetailsContainer(props) {
   const { authToken } = useAuthSelector();
   const { successSnackCorner, errorSnackCorner } = useMySnackbar();
   const viewManager = useViewManager();
+  const confirm = useConfirmation();
 
-  // Calculating total price from cart
+  // Calculating total price  from cart
   // TODO: The same componet is used to show order details, so total price become wrong there
   useEffect(() => {
     let promises = cart.products.map((p) => {
@@ -51,7 +53,7 @@ function CheckoutDetailsContainer(props) {
     AddressPicker.close();
   }
 
-  function placeOrderHandler() {
+  function placeOrder() {
     let promises = cart.products.map((item) => {
       api
         .createOrderUsingToken(
@@ -71,6 +73,14 @@ function CheckoutDetailsContainer(props) {
     Promise.allSettled(promises).then(() => {
       viewManager.navigateTo({ viewName: PAST_ORDERS, title: "Your Orders" });
     });
+  }
+
+  function placeOrderButtonHandler() {
+    confirm({
+      variant: "ok-cancel",
+      title: "Proceed to place order",
+      description: "You are about to place order, are you sure to proceed?",
+    }).then(() => placeOrder());
   }
 
   function CartEmptyBrowseProductsInfo() {
@@ -142,7 +152,7 @@ function CheckoutDetailsContainer(props) {
           style={{ marginTop: "1em" }}
           variant="contained"
           color="secondary"
-          onClick={placeOrderHandler}
+          onClick={placeOrderButtonHandler}
           disabled={!deliveryAddress || cart.products.length < 1}
         >
           Place Order
