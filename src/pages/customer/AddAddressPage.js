@@ -1,15 +1,17 @@
 import { Grid } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../api/api";
 import AddressForm from "../../forms/AddressForm";
 import useViewManager from "../../hooks/useViewManager";
 import SideNavLayout from "../../layout/SideNavLayout";
+import { setDeliveryAddress } from "../../store/cartSlice";
 
 function AddAddressPage(props) {
   const auth = useSelector((state) => state.auth);
   const currentView = useSelector((state) => state.flow.currentView);
   const viewManager = useViewManager();
+  const dispatch = useDispatch();
   // TODO: Redirect if not logged in
   function addressFormSubmitHandler(address) {
     console.log(address);
@@ -25,6 +27,11 @@ function AddAddressPage(props) {
       })
       .then((id) => {
         console.log(id);
+        api
+          .fetchAddressById({ token: auth.token, addressId: id })
+          .then((address) => {
+            dispatch(setDeliveryAddress(address));
+          });
         viewManager.moveForward();
       })
       .catch((e) => {

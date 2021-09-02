@@ -32,6 +32,15 @@ export default function useMySnackbar() {
       },
     });
   }
+  function errorSnackTop(message) {
+    enqueueSnack(message, {
+      variant: "error",
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+      },
+    });
+  }
   function enqueueFetchFailedSnack() {
     enqueueErrorSnack("Fetching failed!");
   }
@@ -42,5 +51,6 @@ export default function useMySnackbar() {
     enqueueFetchFailedSnack,
     successSnackCorner,
     errorSnackCorner,
+    errorSnackTop,
   };
 }

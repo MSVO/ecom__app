@@ -26,7 +26,6 @@ import {
 import { isWithinRange } from "../../validation/validation";
 
 const useStyles = makeStyles((theme) => ({
-  margin: {},
   root: {
     margin: "1em",
     minWidth: 250,

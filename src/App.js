@@ -11,6 +11,7 @@ import PastOrdersPage from "./pages/customer/PastOrdersPage";
 import ProductsPage from "./pages/public/ProductsPage";
 import routes from "./routes/routes";
 import CustomerProductsPage from "./customer-products/pages/ProductsPage";
+import CustomerOrdersPage from "./customer-orders/pages/OrdersPage";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
           <AddressesPage />
         </Route>
         <Route exact path={routes.pastOrders.template}>
-          <PastOrdersPage />
+          <CustomerOrdersPage />
         </Route>
         <Route exact path={routes.manageOrders.template}>
           <OrdersPage />
