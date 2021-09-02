@@ -10,13 +10,14 @@ import OrdersPage from "./pages/admin/OrdersPage";
 import PastOrdersPage from "./pages/customer/PastOrdersPage";
 import ProductsPage from "./pages/public/ProductsPage";
 import routes from "./routes/routes";
+import CustomerProductsPage from "./customer-products/pages/ProductsPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <ProductsPage />
+          <CustomerProductsPage />
         </Route>
         <Route exact path="/checkout">
           <CheckoutPage />

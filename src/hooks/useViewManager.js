@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import routes from "../routes/routes";
 import { resetAuth } from "../store/authSlice";
-import { clearCart } from "../store/cartSlice";
+import { clearCart, resetCart } from "../store/cartSlice";
 import {
   discardNextViews,
   popNextViewOrLandingToCurrent,
@@ -58,7 +58,7 @@ function useViewManager() {
   };
   const logout = () => {
     navigateTo({ viewName: LANDING });
-    dispatch(clearCart());
+    dispatch(resetCart());
     dispatch(resetFlow());
     dispatch(resetAuth());
   };
@@ -112,6 +112,7 @@ function useViewManager() {
     pushView,
     moveForward,
     navigateTo,
+    navigateToLanding,
     discardStack,
     promptSignIn,
     pushCurrentAndNavigate,
